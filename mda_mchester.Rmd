@@ -1,0 +1,80 @@
+---
+title: "mda_mchester"
+author: "mchester"
+date: "05/10/2021"
+output: 
+  html_document:
+    toc: true
+    toc_float:
+      collapsed: false
+      smooth_scrool: false
+---
+
+# **Intro**
+
+### **Purpose**
+
+The purpose of this code is to complete STAT 545A mini-data analysis, Milestone 1. 
+
+### **Author**
+
+The author of this code is Marshall Chester, with open sourced data.
+
+### **Packages**
+
+The following packages must be installed:
+
+- [x] install.packages("devtools")
+- [x] devtools::install_github("UBC-MDS/datateachr")
+
+The following libraries must be loaded:
+
+- [x] library(datateachr)
+- [x] library(tidyverse)
+
+
+# **Task 1: Choose favourite dataset**
+
+
+### **First dataset ranking**
+
+1. flow_sample
+2. cancer_sample
+3. vancouver_trees
+4. apt_buildings
+
+### **Dataset exploration**
+
+```
+dim(flow_sample)
+class(flow_sample)
+
+dim(cancer_sample)
+class(cancer_sample)
+
+dim(vancouver_trees)
+class(vancouver_trees)
+
+dim(apt_buildings)
+class(apt_buildings)
+
+```
+
+### **Dataset attributes**
+
+Dataset | Rows | Columns | Class | Research Question 
+:------:|:----:|:-------:|:-----:|:-----------------|
+flow_sample | 218 | 7 | data.frame | Is maximum flow always within June and July?
+cancer_sample | 569 | 32 | data.frame | What is the average area of a malignant tumour in UCI population?
+vancouver_trees | 146,611 | 20 | data.frame | Which Vancouver neighbourhood has the greatest number of tree species?
+apt_buildings | 3,455 | 37 | data.frame | What percentage of buildings built before 2000 have air conditioning?
+
+### **Pair down**
+
+After viewing the data, I decided to proceed with cancer_sample and apt_buildings. The research questions formulated from the exploration were of greatest interest.
+
+### **Final decision**
+
+I have decided to proceed with the cancer_sample dataset due to personal interest in the research question and robust nature of the data.
+
+# **Task 2: Explore favourite dataset**
