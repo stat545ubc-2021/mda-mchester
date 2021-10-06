@@ -10,7 +10,13 @@ output:
       smooth_scrool: false
 ---
 
-# **Intro**
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(datateachr)
+library(tidyverse)
+```
+
+# **Introduction**
 
 ### **Purpose**
 
@@ -33,7 +39,7 @@ The following libraries must be loaded:
 - [x] library(tidyverse)
 
 
-# **Task 1: Choose favourite dataset**
+# **Task 1: Choose dataset**
 
 
 ### **First dataset ranking**
@@ -45,7 +51,7 @@ The following libraries must be loaded:
 
 ### **Dataset exploration**
 
-```
+```{r}
 dim(flow_sample)
 class(flow_sample)
 
@@ -62,7 +68,7 @@ class(apt_buildings)
 
 ### **Dataset attributes**
 
-Dataset | Rows | Columns | Class | Research Question 
+Dataset | Rows | Columns | Class | Potential Research Question 
 :------:|:----:|:-------:|:-----:|:-----------------|
 flow_sample | 218 | 7 | data.frame | Is maximum flow always within June and July?
 cancer_sample | 569 | 32 | data.frame | What is the average area of a malignant tumour in UCI population?
@@ -77,4 +83,38 @@ After viewing the data, I decided to proceed with cancer_sample and apt_building
 
 I have decided to proceed with the cancer_sample dataset due to personal interest in the research question and robust nature of the data.
 
-# **Task 2: Explore favourite dataset**
+# **Task 2: Explore dataset**
+
+### **Explore relationship**
+```{r, fig.align = "center"}
+ggplot(cancer_sample, 
+       aes(area_mean, radius_mean)) +
+  geom_point(aes(color = diagnosis),
+             size = 3, 
+             alpha = 0.4)
+```
+
+### **Create boxplot**
+
+```{r, fig.align = "center"}
+ggplot(cancer_sample, 
+       aes(x = diagnosis, y = symmetry_mean)) +
+  geom_boxplot(alpha = 0) +
+  geom_jitter(alpha = 0.3, colour = "tomato")
+```
+
+### **New tibble**
+
+```{r, fig.align = "centre"}
+tibble(cancer_sample) %>%
+  select(diagnosis, radius_mean, area_mean, smoothness_mean, symmetry_mean)
+```
+
+### **Distribution plot**
+```{r, fig.align = "center"}
+ggplot(cancer_sample,
+       aes(area_mean)) +
+  geom_density(aes(fill = diagnosis))
+```
+
+# **Task 3: Research Questions**
