@@ -1,4 +1,5 @@
 ### This code analyses and explores data sets for STAT 545A Milestone 1
+### Code developed by Marshall Chester
 
 #install packages
 install.packages("devtools")

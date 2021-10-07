@@ -22,11 +22,11 @@ library(tidyverse)
 
 ### **Purpose**
 
-The purpose of this code is to complete STAT 545A mini-data analysis, Milestone 1. 
+The purpose of this markdown is to complete STAT 545A mini-data analysis, Milestone 1. Multiple open-sourced datasets will be explored, and one final dataset will be selected.
 
 ### **Author**
 
-The author of this code is Marshall Chester, with open sourced data.
+The author of this code is Marshall Chester, with open sourced data from the datateachr library.
 
 ### **Packages**
 
@@ -87,6 +87,8 @@ I have decided to proceed with the cancer_sample dataset due to personal interes
 
 # **Task 2: Explore dataset**
 
+In the cancer_sample dataset, area_mean and radius_mean are continuous variables and can be explored by plotting each variable on the x and y axis, respectively. A positive, linear relationship is expected. By grouping data points with diagnosis (a dichotomous variable), an interesting plot relationship could form. 
+
 ### **Explore relationship**
 ```{r, fig.align = "center"}
 #explore relationship between 2 variables
@@ -108,6 +110,8 @@ I have decided to proceed with the cancer_sample dataset due to personal interes
 
 ### **Create boxplot**
 
+A boxplot can provide detailed information between dichotomous and continuous variables. In the cancer_sample dataset, diagnosis is dichotomous (malignant or benign) and symmetry_mean is continuous. A boxplot will help visualize the relationship between malignant and benign diagnoses. There may be an interesting outcome for further consideration.
+
 ```{r, fig.align = "center"}
 #create boxplot between 2 variables
 ggplot(cancer_sample, 
@@ -126,12 +130,17 @@ ggplot(cancer_sample,
 
 ### **New tibble**
 
+The cancer_sample includes 32 unique variables. A new tibble can be created to include the variables most interesting to the author. For the purpose of model building, this parsed tibble will help to create an efficient workflow. 
+
 ```{r, fig.align = "centre"}
 tibble(cancer_sample) %>%
   select(diagnosis, radius_mean, area_mean, smoothness_mean, symmetry_mean)
 ```
 
-### **Distribution plot**
+### **Density plot**
+
+Peaks within a density help to understand where the data are concentrated. In the cancer_sample dataset, the area_mean variable provides continuous data on the average area of diagnoses. A density plot can be created to visualize the concentration of values for both malignant and benign diagnoses. With this visualization, a greater understanding is available. 
+
 ```{r, fig.align = "center"}
 #check density plot of area_mean
 ggplot(cancer_sample,
@@ -149,7 +158,9 @@ ggplot(cancer_sample,
 
 # **Task 3: Research Questions**
 
+With the dataset selected and explored, four potential research questions can be formed. 
+
 1. Which subsetted variables (see tibble) are most predictive of a malignant diagnosis?
 2. Which subsetted variables (see tibble) are most predictive of a benign diagnosis?
-3. Is the relationship between symmetry and diagnosis statistically significant?
+3. Is the relationship between symmetry and malignant diagnosis statistically significant?
 4. What is the strength of correlation between mean radius and area?
