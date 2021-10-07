@@ -42,7 +42,6 @@ view(apt_buildings)
              alpha = 0.4) +
     labs(x = "Area (Mean)", #add labels
          y = "Radius (Mean)", 
-         title = "Radius (Mean) vs. Area (Mean)",
          caption = "Source: UCI, 1995") +
     theme(plot.title = element_text(hjust = 0.5)) + 
     scale_color_discrete(name = "Diagnosis", #change legend
@@ -52,13 +51,13 @@ view(apt_buildings)
 ggplot(cancer_sample, 
        aes(x = diagnosis,
            y = symmetry_mean)) +
-  geom_boxplot(alpha = 0) +
-  geom_jitter(alpha = 0.3, colour = "tomato") + 
+  geom_boxplot(alpha = 0, 
+               width = 0.25) +
+  geom_jitter(alpha = 0.3,
+              width =0.25) + 
   labs(x = "Diagnosis", #add labels
        y = "Symmetry (Mean)", 
-       title = "Symmetry (Mean) vs Diagnosis",
        caption = "Source: UCI, 1995") +
-  theme(plot.title = element_text(hjust = 0.5)) + 
   scale_x_discrete(breaks = c("B","M"), #change legend
                    labels = c("Benign", "Malignant"))
 
@@ -68,16 +67,14 @@ tibble(cancer_sample) %>%
 
 #check density plot of area_mean
 ggplot(cancer_sample,
-       aes(x = area_mean)) +
-  geom_density(aes(fill = diagnosis),
-               alpha = 0.8) +
+       aes(x = area_mean,
+           y = diagnosis)) +
+  ggridges::geom_density_ridges() +
   labs(x = "Area (Mean)", #add labels
-       y = "Density", 
-       title = "Area (Mean) Density Plot",
-       caption = "Source: UCI, 1995") + 
-  theme(plot.title = element_text(hjust = 0.5)) +
-  scale_fill_discrete(name = "Diagnosis",
-                      labels = c("Benign", "Malignant"))
+       y = "Diagnosis", 
+       caption = "Source: UCI, 1995") +
+  scale_y_discrete(breaks=c("B", "M"),
+                   labels=c("Benign", "Malignant"))
   
 
 

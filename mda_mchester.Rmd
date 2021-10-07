@@ -101,7 +101,6 @@ In the cancer_sample dataset, area_mean and radius_mean are continuous variables
              alpha = 0.4) +
     labs(x = "Area (Mean)", #add labels
          y = "Radius (Mean)", 
-         title = "Radius (Mean) vs. Area (Mean)",
          caption = "Source: UCI, 1995") +
     theme(plot.title = element_text(hjust = 0.5)) + 
     scale_color_discrete(name = "Diagnosis", #change legend
@@ -113,17 +112,16 @@ In the cancer_sample dataset, area_mean and radius_mean are continuous variables
 A boxplot can provide detailed information between dichotomous and continuous variables. In the cancer_sample dataset, diagnosis is dichotomous (malignant or benign) and symmetry_mean is continuous. A boxplot will help visualize the relationship between malignant and benign diagnoses. There may be an interesting outcome for further consideration.
 
 ```{r, fig.align = "center"}
-#create boxplot between 2 variables
 ggplot(cancer_sample, 
        aes(x = diagnosis,
            y = symmetry_mean)) +
-  geom_boxplot(alpha = 0) +
-  geom_jitter(alpha = 0.3, colour = "tomato") + 
+  geom_boxplot(alpha = 0, 
+               width = 0.25) +
+  geom_jitter(alpha = 0.3,
+              width =0.25) + 
   labs(x = "Diagnosis", #add labels
        y = "Symmetry (Mean)", 
-       title = "Symmetry (Mean) vs Diagnosis",
        caption = "Source: UCI, 1995") +
-  theme(plot.title = element_text(hjust = 0.5)) + 
   scale_x_discrete(breaks = c("B","M"), #change legend
                    labels = c("Benign", "Malignant"))
 ```
@@ -144,23 +142,24 @@ Peaks within a density help to understand where the data are concentrated. In th
 ```{r, fig.align = "center"}
 #check density plot of area_mean
 ggplot(cancer_sample,
-       aes(x = area_mean)) +
-  geom_density(aes(fill = diagnosis),
-               alpha = 0.8) +
+       aes(x = area_mean,
+           y = diagnosis)) +
+  ggridges::geom_density_ridges() +
   labs(x = "Area (Mean)", #add labels
-       y = "Density", 
-       title = "Area (Mean) Density Plot",
-       caption = "Source: UCI, 1995") + 
-  theme(plot.title = element_text(hjust = 0.5)) +
-  scale_fill_discrete(name = "Diagnosis",
-                      labels = c("Benign", "Malignant"))
+       y = "Diagnosis", 
+       caption = "Source: UCI, 1995") +
+  scale_y_discrete(breaks=c("B", "M"),
+                   labels=c("Benign", "Malignant"))
 ```
 
 # **Task 3: Research Questions**
 
 With the dataset selected and explored, four potential research questions can be formed. 
 
-1. Which subsetted variables (see tibble) are most predictive of a malignant diagnosis?
-2. Which subsetted variables (see tibble) are most predictive of a benign diagnosis?
-3. Is the relationship between symmetry and malignant diagnosis statistically significant?
-4. What is the strength of correlation between mean radius and area?
+1. Which subsetted variables (see tibble) are most predictive of a malignant diagnosis?\n
+
+2. Which subsetted variables (see tibble) are most predictive of a benign diagnosis?\n
+
+3. Is the relationship between symmetry and malignant diagnosis statistically significant?\n
+
+4. What is the strength of correlation between mean radius and area?\n
