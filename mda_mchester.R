@@ -45,7 +45,7 @@ ggplot(cancer_sample, #explore relationship between variables
        caption = "Source: UCI, 1995") +
   scale_color_discrete(name = "Diagnosis", #change legend
                        labels=c("Benign", "Malignant")) +
-  facet_wrap(~diagnosis) + #facet by row
+  facet_wrap(~diagnosis) + #facet
   theme(strip.text.x = element_blank())
                                 
 
