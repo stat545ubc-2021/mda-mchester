@@ -32,14 +32,17 @@ The author of this code is Marshall Chester, with open sourced data from the dat
 
 The following packages must be installed:
 
-- [x] install.packages("devtools")
-- [x] devtools::install_github("UBC-MDS/datateachr")
+```r
+install.packages("devtools")
+devtools::install_github("UBC-MDS/datateachr")
+```
 
 The following libraries must be loaded:
 
-- [x] library(datateachr)
-- [x] library(tidyverse)
-
+```r
+library(datateachr)
+library(tidyverse)
+```
 
 # **Task 1: Choose dataset**
 
@@ -73,7 +76,7 @@ class(apt_buildings)
 Dataset | Rows | Columns | Class | Potential Research Question 
 :------:|:----:|:-------:|:-----:|:-----------------|
 flow_sample | 218 | 7 | data.frame | Is maximum flow always within June and July?
-cancer_sample | 569 | 32 | data.frame | What is the average area of a malignant tumour in UCI population?
+cancer_sample | 569 | 32 | data.frame | What is the average area of malignant diagnoses?
 vancouver_trees | 146,611 | 20 | data.frame | Which Vancouver neighbourhood has the greatest number of tree species?
 apt_buildings | 3,455 | 37 | data.frame | What percentage of buildings built before 2000 have air conditioning?
 
@@ -83,7 +86,7 @@ After viewing the data, I decided to proceed with cancer_sample and apt_building
 
 ### **Final decision**
 
-I have decided to proceed with the cancer_sample dataset due to personal interest in the research question and robust nature of the data.
+I have decided to proceed with the cancer_sample dataset due to personal interest in the research question, as well as the robust and deep nature of the data and its variables.
 
 # **Task 2: Explore dataset**
 
@@ -91,20 +94,20 @@ In the cancer_sample dataset, area_mean and radius_mean are continuous variables
 
 ### **Explore relationship**
 ```{r, fig.align = "center"}
-#explore relationship between 2 variables
-  ggplot(cancer_sample, 
-       aes(x = area_mean, 
+ggplot(cancer_sample, #explore relationship between variables
+       aes(x = area_mean,
            y = radius_mean, 
            group = diagnosis)) +
   geom_point(aes(color = diagnosis),
-             size = 3, 
+             size = 3, #add transparency and change size
              alpha = 0.4) +
     labs(x = "Area (Mean)", #add labels
          y = "Radius (Mean)", 
          caption = "Source: UCI, 1995") +
-    theme(plot.title = element_text(hjust = 0.5)) + 
     scale_color_discrete(name = "Diagnosis", #change legend
-                         labels=c("Benign", "Malignant"))
+                         labels=c("Benign", "Malignant")) +
+    facet_wrap(~diagnosis) + #facet by row
+  theme(strip.text.x = element_blank())
 ```
 
 ### **Create boxplot**
@@ -112,17 +115,17 @@ In the cancer_sample dataset, area_mean and radius_mean are continuous variables
 A boxplot can provide detailed information between dichotomous and continuous variables. In the cancer_sample dataset, diagnosis is dichotomous (malignant or benign) and symmetry_mean is continuous. A boxplot will help visualize the relationship between malignant and benign diagnoses. There may be an interesting outcome for further consideration.
 
 ```{r, fig.align = "center"}
-ggplot(cancer_sample, 
+ggplot(cancer_sample, #create boxplot between 2 variables
        aes(x = diagnosis,
            y = symmetry_mean)) +
-  geom_boxplot(alpha = 0, 
+  geom_boxplot(alpha = 0, #add transparency and change width
                width = 0.25) +
-  geom_jitter(alpha = 0.3,
+  geom_jitter(alpha = 0.3, #add transparency and change width
               width =0.25) + 
   labs(x = "Diagnosis", #add labels
        y = "Symmetry (Mean)", 
        caption = "Source: UCI, 1995") +
-  scale_x_discrete(breaks = c("B","M"), #change legend
+  scale_x_discrete(breaks = c("B","M"), #change x tick
                    labels = c("Benign", "Malignant"))
 ```
 
@@ -131,8 +134,8 @@ ggplot(cancer_sample,
 The cancer_sample includes 32 unique variables. A new tibble can be created to include the variables most interesting to the author. For the purpose of model building, this parsed tibble will help to create an efficient workflow. 
 
 ```{r, fig.align = "centre"}
-tibble(cancer_sample) %>%
-  select(diagnosis, radius_mean, area_mean, smoothness_mean, symmetry_mean)
+tibble(cancer_sample) %>% #make new tibble of interesting variables
+  select(diagnosis, radius_mean, perimeter_mean, area_mean, smoothness_mean, symmetry_mean)
 ```
 
 ### **Density ridge plot**
@@ -140,16 +143,16 @@ tibble(cancer_sample) %>%
 Peaks within a density help to understand where the data are concentrated. In the cancer_sample dataset, the area_mean variable provides continuous data on the average area of diagnoses. A density plot can be created to visualize the concentration of values for both malignant and benign diagnoses. With this visualization, a greater understanding is available. 
 
 ```{r, fig.align = "center"}
-#check density plot of area_mean
-ggplot(cancer_sample,
-       aes(x = area_mean,
-           y = diagnosis)) +
-  ggridges::geom_density_ridges() +
+ggplot(cancer_sample, #check density plot of area_mean
+       aes(area_mean, fill = diagnosis)) +
+  geom_density(alpha = 0.6) +
   labs(x = "Area (Mean)", #add labels
-       y = "Diagnosis", 
+       y = "Density",
+       fill = "Diagnosis",
        caption = "Source: UCI, 1995") +
-  scale_y_discrete(breaks=c("B", "M"),
-                   labels=c("Benign", "Malignant"))
+  scale_fill_discrete( #change legend titles
+    limits = c("B", "M"),
+                      labels = c("Benign", "Malignant"))
 ```
 
 # **Task 3: Research Questions**
