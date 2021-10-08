@@ -160,10 +160,10 @@ ggplot(cancer_sample, #create boxplot between 2 variables
 
 With the dataset selected and explored, four potential research questions can be formed. 
 
-1. Which subsetted variables (see tibble) are most predictive of a malignant diagnosis?\n
+1. Which subsetted variables are most predictive of a malignant diagnosis?\n
 
-2. Which subsetted variables (see tibble) are most predictive of a benign diagnosis?\n
+2. Which subsetted variables are least predictive of a benign diagnosis?\n
 
-3. Is the relationship between symmetry and malignant diagnosis statistically significant?\n
+3. Is the relationship between symmetry and diagnoses statistically significant?\n
 
 4. What is the strength of association between mean radius and area?\n
