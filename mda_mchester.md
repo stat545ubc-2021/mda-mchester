@@ -1,7 +1,7 @@
-mda_mchester
+Mini Data Analysis (Milestone 1)
 ================
-mchester
-09/10/2021
+Marshall Chester
+October 9, 2021
 
 -   [**Introduction**](#introduction)
 -   [**Task 1: Choose dataset**](#task-1-choose-dataset)
