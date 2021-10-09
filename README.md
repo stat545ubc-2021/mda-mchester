@@ -8,8 +8,8 @@ I made this repo to complete Milestone 1 of the mini-data analysis for STAT 545A
 ##### What files are here?
 
 1. README.md
-2. mda-mchester.Rmd
-  - This file contains explores several datasets from the datateachr library, selects one final dataset for visualization, and discusses four potential research questions. 
+
+2. ```r mda-mchester.Rmd ``` contains explores several datasets from the datateachr library, selects one final dataset for visualization, and discusses four potential research questions. 
 
 ##### How can you run code?
 
