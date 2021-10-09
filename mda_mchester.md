@@ -1,6 +1,6 @@
 Mini Data Analysis (Milestone 1)
 ================
-mchester
+Marshall Chester
 09/10/2021
 
 -   [**Introduction**](#introduction)
