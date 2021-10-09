@@ -7,8 +7,10 @@ I made this repo to complete Milestone 1 of the mini-data analysis for STAT 545A
 
 ##### What files are here?
 
-1. ```README.md``` provides detail on what the project is about, which files are present, and how to run the code.
-2. ```mda-mchester.Rmd``` contains explores several datasets from the datateachr library, selects one final dataset for visualization, and discusses four potential research questions.
+1. ```mda_mchester_files/figure-gfm``` contains files of outputted plots for visualization and exploration.
+2. ```README.md``` provides detail on what the project is about, which files are present, and how to run the code.
+3. ```mda-mchester.Rmd``` contains explores several datasets from the datateachr library, selects one final dataset for visualization, and discusses four potential research questions.
+4. ```mda_mchester.md``` is a knitted ```github_document``` for the purpose of review and evaluation.
 
 ##### How can you run code?
 
