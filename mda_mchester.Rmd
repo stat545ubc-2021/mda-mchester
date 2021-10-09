@@ -36,14 +36,14 @@ The author of this code is Marshall Chester, with open sourced data from the ```
 
 The following packages must be installed:
 
-```r
-install.packages("devtools")
-devtools::install_github("UBC-MDS/datateachr")
+```{r}
+# install.packages("devtools")
+# devtools::install_github("UBC-MDS/datateachr")
 ```
 
 The following libraries must be loaded:
 
-```r
+```{r}
 library(datateachr)
 library(tidyverse)
 ```
@@ -171,3 +171,4 @@ With the dataset selected and explored, four potential research questions are po
 3. Is the relationship between symmetry and diagnoses statistically significant?\n
 
 4. What is the strength of association between mean radius and area?\n
+

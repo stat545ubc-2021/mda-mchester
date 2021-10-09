@@ -32,8 +32,8 @@ the `datateachr` library.
 The following packages must be installed:
 
 ``` r
-install.packages("devtools")
-devtools::install_github("UBC-MDS/datateachr")
+# install.packages("devtools")
+# devtools::install_github("UBC-MDS/datateachr")
 ```
 
 The following libraries must be loaded:
@@ -182,7 +182,7 @@ ggplot(cancer_sample, #check density plot of area_mean
                       labels = c("Benign", "Malignant"))
 ```
 
-<img src="mda_mchester_files/figure-gfm/unnamed-chunk-3-1.png" style="display: block; margin: auto;" />
+<img src="mda_mchester_files/figure-gfm/unnamed-chunk-5-1.png" style="display: block; margin: auto;" />
 
 ### **Create boxplot**
 
@@ -208,7 +208,7 @@ ggplot(cancer_sample, #create boxplot between 2 variables
                    labels = c("Benign", "Malignant"))
 ```
 
-<img src="mda_mchester_files/figure-gfm/unnamed-chunk-4-1.png" style="display: block; margin: auto;" />
+<img src="mda_mchester_files/figure-gfm/unnamed-chunk-6-1.png" style="display: block; margin: auto;" />
 
 ### **Explore relationship**
 
@@ -229,7 +229,7 @@ ggplot(cancer_sample, #explore relationship between variables
   theme(strip.text.x = element_blank())
 ```
 
-<img src="mda_mchester_files/figure-gfm/unnamed-chunk-5-1.png" style="display: block; margin: auto;" />
+<img src="mda_mchester_files/figure-gfm/unnamed-chunk-7-1.png" style="display: block; margin: auto;" />
 
 # **Task 3: Research Questions**
 
