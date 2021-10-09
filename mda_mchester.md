@@ -182,8 +182,6 @@ ggplot(cancer_sample, #check density plot of area_mean
                       labels = c("Benign", "Malignant"))
 ```
 
-<img src="mda_mchester_files/figure-gfm/unnamed-chunk-5-1.png" style="display: block; margin: auto;" />
-
 ### **Create boxplot**
 
 A boxplot can provide detailed information between dichotomous and
@@ -208,8 +206,6 @@ ggplot(cancer_sample, #create boxplot between 2 variables
                    labels = c("Benign", "Malignant"))
 ```
 
-<img src="mda_mchester_files/figure-gfm/unnamed-chunk-6-1.png" style="display: block; margin: auto;" />
-
 ### **Explore relationship**
 
 ``` r
@@ -228,8 +224,6 @@ ggplot(cancer_sample, #explore relationship between variables
     facet_wrap(~diagnosis) + #facet
   theme(strip.text.x = element_blank())
 ```
-
-<img src="mda_mchester_files/figure-gfm/unnamed-chunk-7-1.png" style="display: block; margin: auto;" />
 
 # **Task 3: Research Questions**
 
