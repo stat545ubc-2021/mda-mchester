@@ -22,7 +22,7 @@ library(tidyverse)
 
 ### **Purpose**
 
-The purpose of this markdown is to complete STAT 545A mini-data analysis (Milestone 1). Several open-sourced datasets will be explored, and one final dataset will be visualized for research purposes. 
+The purpose of this markdown is to complete STAT 545A Mini-Data Analysis (Milestone 1). Several open-sourced datasets will be explored, and one final dataset will be visualized for research purposes. 
 
 ### **Author**
 
