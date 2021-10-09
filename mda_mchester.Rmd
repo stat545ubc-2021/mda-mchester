@@ -20,7 +20,9 @@ library(tidyverse)
 
 ### **Purpose**
 
-The purpose of this markdown is to complete STAT 545A Mini-Data Analysis (Milestone 1). The author will:
+The purpose of this markdown is to complete STAT 545A Mini-Data Analysis (Milestone 1).\n
+
+The author will:
 
 1. Become familiar with one dataset
 2. Create four questions from selected dataset
@@ -36,14 +38,14 @@ The author of this code is Marshall Chester, with open sourced data from the ```
 
 The following packages must be installed:
 
-```{r}
+```{r packages}
 # install.packages("devtools")
 # devtools::install_github("UBC-MDS/datateachr")
 ```
 
 The following libraries must be loaded:
 
-```{r}
+```{r libraries}
 library(datateachr)
 library(tidyverse)
 ```
@@ -60,7 +62,7 @@ library(tidyverse)
 
 ### **Dataset exploration**
 
-```{r}
+```{r exploration}
 dim(flow_sample)
 class(flow_sample)
 
@@ -100,8 +102,8 @@ In the cancer_sample dataset, area_mean and radius_mean are continuous variables
 
 The cancer_sample includes 32 unique variables. A new tibble can be created to include the variables most interesting to the author. For the purpose of model building, this parsed tibble will help to create an efficient workflow. 
 
-```{r, fig.align = "centre"}
-tibble(cancer_sample) %>% #make new tibble of interesting variables
+```{r cancer tibble, fig.align = "centre"}
+tibble(cancer_sample) %>% #make new tibble of interested variables
   select(diagnosis, radius_mean, perimeter_mean, area_mean, smoothness_mean, symmetry_mean)
 ```
 
@@ -109,7 +111,7 @@ tibble(cancer_sample) %>% #make new tibble of interesting variables
 
 Peaks within a density help to understand where the data are concentrated. In the cancer_sample dataset, the area_mean variable provides continuous data on the average area of diagnoses. A density plot can be created to visualize the concentration of values for both malignant and benign diagnoses. With this visualization, a greater understanding is available. 
 
-```{r, fig.align = "center"}
+```{r density plot, fig.align = "center"}
 ggplot(cancer_sample, #check density plot of area_mean
        aes(area_mean, fill = diagnosis)) +
   geom_density(alpha = 0.6) +
@@ -126,7 +128,7 @@ ggplot(cancer_sample, #check density plot of area_mean
 
 A boxplot can provide detailed information between dichotomous and continuous variables. In the cancer_sample dataset, diagnosis is dichotomous (malignant or benign) and symmetry_mean is continuous. A boxplot will help visualize the relationship between malignant and benign diagnoses. There may be an interesting outcome for further consideration.
 
-```{r, fig.align = "center"}
+```{r boxplot, fig.align = "center"}
 ggplot(cancer_sample, #create boxplot between 2 variables
        aes(x = diagnosis,
            y = symmetry_mean)) +
@@ -143,7 +145,7 @@ ggplot(cancer_sample, #create boxplot between 2 variables
 
 ### **Explore relationship**
 
-```{r, fig.align = "center"}
+```{r scatterplot, fig.align = "center"}
 ggplot(cancer_sample, #explore relationship between variables
        aes(x = area_mean,
            y = radius_mean, 
