@@ -22,11 +22,11 @@ library(tidyverse)
 
 ### **Purpose**
 
-The purpose of this markdown is to complete STAT 545A mini-data analysis, Milestone 1. Multiple open-sourced datasets will be explored, and one final dataset will be selected.
+The purpose of this markdown is to complete STAT 545A mini-data analysis (Milestone 1). Several open-sourced datasets will be explored, and one final dataset will be visualized for research purposes. 
 
 ### **Author**
 
-The author of this code is Marshall Chester, with open sourced data from the datateachr library.
+The author of this code is Marshall Chester, with open sourced data from the ```datateachr``` library.
 
 ### **Packages**
 
@@ -47,7 +47,7 @@ library(tidyverse)
 # **Task 1: Choose dataset**
 
 
-### **First dataset ranking**
+### **Initial ranking**
 
 1. flow_sample
 2. cancer_sample
@@ -82,7 +82,7 @@ apt_buildings | 3,455 | 37 | data.frame | What percentage of buildings built bef
 
 ### **Pair down**
 
-After viewing the data, I decided to proceed with cancer_sample and apt_buildings. These datasets included greater than 30 variables and 500 points for comparison each. 
+After viewing the data, I decided to proceed with cancer_sample and apt_buildings. These datasets are rich and include greater than 30 variables and 500 points for exploration and visualization.
 
 ### **Final decision**
 
@@ -90,9 +90,7 @@ I have decided to proceed with the cancer_sample dataset due to personal interes
 
 # **Task 2: Explore dataset**
 
-In the cancer_sample dataset, area_mean and radius_mean are continuous variables and can be explored by plotting each variable on the x and y axis, respectively. A positive, linear relationship is expected. By grouping data points with diagnosis (a dichotomous variable), an interesting plot relationship could form. 
-
-### **Explore relationship**
+In the cancer_sample dataset, area_mean and radius_mean are continuous variables and can be explored by plotting each variable on the x and y axis, respectively. A positive, linear relationship is expected. By grouping data points with diagnosis (dichotomous variable), an interesting relationship could be seen.
 
 ### **New tibble**
 
@@ -120,23 +118,6 @@ ggplot(cancer_sample, #check density plot of area_mean
                       labels = c("Benign", "Malignant"))
 ```
 
-```{r, fig.align = "center"}
-ggplot(cancer_sample, #explore relationship between variables
-       aes(x = area_mean,
-           y = radius_mean, 
-           group = diagnosis)) +
-  geom_point(aes(color = diagnosis),
-             size = 3, #add transparency and change size
-             alpha = 0.4) +
-    labs(x = "Area (Mean)", #add labels
-         y = "Radius (Mean)", 
-         caption = "Source: UCI, 1995") +
-    scale_color_discrete(name = "Diagnosis", #change legend
-                         labels=c("Benign", "Malignant")) +
-    facet_wrap(~diagnosis) + #facet
-  theme(strip.text.x = element_blank())
-```
-
 ### **Create boxplot**
 
 A boxplot can provide detailed information between dichotomous and continuous variables. In the cancer_sample dataset, diagnosis is dichotomous (malignant or benign) and symmetry_mean is continuous. A boxplot will help visualize the relationship between malignant and benign diagnoses. There may be an interesting outcome for further consideration.
@@ -156,9 +137,28 @@ ggplot(cancer_sample, #create boxplot between 2 variables
                    labels = c("Benign", "Malignant"))
 ```
 
+### **Explore relationship**
+
+```{r, fig.align = "center"}
+ggplot(cancer_sample, #explore relationship between variables
+       aes(x = area_mean,
+           y = radius_mean, 
+           group = diagnosis)) +
+  geom_point(aes(color = diagnosis),
+             size = 3, #add transparency and change size
+             alpha = 0.4) +
+    labs(x = "Area (Mean)", #add labels
+         y = "Radius (Mean)", 
+         caption = "Source: UCI, 1995") +
+    scale_color_discrete(name = "Diagnosis", #change legend
+                         labels=c("Benign", "Malignant")) +
+    facet_wrap(~diagnosis) + #facet
+  theme(strip.text.x = element_blank())
+```
+
 # **Task 3: Research Questions**
 
-With the dataset selected and explored, four potential research questions can be formed. 
+With the dataset selected and explored, four potential research questions are postulated.
 
 1. Which subsetted variables are most predictive of a malignant diagnosis?\n
 
