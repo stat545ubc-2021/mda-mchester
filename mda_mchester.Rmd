@@ -1,11 +1,14 @@
 ---
 title: "mda_mchester"
 author: "mchester"
-date: "05/10/2021"
+date: "09/10/2021"
 output:
-    github_document:
+  github_document:
     toc: true
     toc_depth: 2
+  html_document:
+    toc: true
+    toc_float: true
 ---
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
@@ -18,9 +21,10 @@ library(tidyverse)
 ### **Purpose**
 
 The purpose of this markdown is to complete STAT 545A Mini-Data Analysis (Milestone 1). The author will:
-- Become familiar with one dataset
-- Create four questions from dataset
-- Write reproducible and clear report with R Markdown
+
+1. Become familiar with one dataset
+2. Create four questions from selected dataset
+3. Write a reproducible and clear report with R Markdown
 
 Several open-sourced datasets will be explored, and one final dataset will be visualized for research purposes. 
 
