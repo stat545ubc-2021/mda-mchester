@@ -1,14 +1,14 @@
 ---
 title: "Mini Data Analysis (Milestone 1)"
 author: "Marshall Chester"
-date: "2021-10-09"
+date: "09/10/2021"
 output:
-  github_document:
-    toc: true
-    toc_depth: 2
   html_document:
     toc: true
     toc_float: true
+  github_document:
+    toc: true
+    toc_depth: 2
 ---
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)

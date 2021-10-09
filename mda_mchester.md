@@ -1,7 +1,7 @@
 Mini Data Analysis (Milestone 1)
 ================
-Marshall Chester
-2021-10-09
+mchester
+09/10/2021
 
 -   [**Introduction**](#introduction)
 -   [**Task 1: Choose dataset**](#task-1-choose-dataset)
