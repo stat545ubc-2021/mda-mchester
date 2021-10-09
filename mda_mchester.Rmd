@@ -11,9 +11,10 @@ output:
   pdf_document:
     toc: yes
 ---
-
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+library(knitr)
+library(ggplot2)
 library(datateachr)
 library(tidyverse)
 ```
