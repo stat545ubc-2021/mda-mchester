@@ -3,7 +3,7 @@
 
 ##### What is this project?
 
-I made this repo to complete Milestone 1 of the mini-data analysis for STAT 545A. Ultimately, I selected one dataset (cancer_sample) from several available datasets within the datateachr library. Four research questions were proposed as a result of visualization and exploration of this data set. 
+I made this repo to complete Milestone 1 of the mini-data analysis for STAT 545A. Ultimately, I selected one dataset (cancer_sample) from several available datasets within the ```datateachr``` library. Four research questions were proposed as a result of visualization and exploration of this data set. 
 
 ##### What files are here?
 
