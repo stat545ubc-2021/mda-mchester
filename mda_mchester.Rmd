@@ -3,12 +3,12 @@ title: "Mini Data Analysis (Milestone 1)"
 author: "Marshall Chester"
 date: "09/10/2021"
 output:
-  github_document:
-    toc: true
-    toc_depth: 2
   html_document:
     toc: true
     toc_float: true
+  github_document:
+    toc: true
+    toc_depth: 2
 ---
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
@@ -50,7 +50,9 @@ library(datateachr)
 library(tidyverse)
 ```
 
-# **Task 1: Choose dataset**
+# **Milestone 1**
+
+## **Task 1: Choose dataset**
 
 
 ### **Initial ranking**
@@ -94,7 +96,7 @@ After viewing the data, I decided to proceed with cancer_sample and apt_building
 
 I have decided to proceed with the cancer_sample dataset due to personal interest in healthcare. The dataset is robust with a significant number of variables and points for further evaluation. With subsetting, I believe this dataset is well suited for analysis of strength of association and predictive modeling.
 
-# **Task 2: Explore dataset**
+## **Task 2: Explore dataset**
 
 In the cancer_sample dataset, area_mean and radius_mean are continuous variables and can be explored by plotting each variable on the x and y axis, respectively. A positive, linear relationship is expected. By grouping data points with diagnosis (dichotomous variable), an interesting relationship could be seen.
 
@@ -162,15 +164,57 @@ ggplot(cancer_sample, #explore relationship between variables
   theme(strip.text.x = element_blank())
 ```
 
-# **Task 3: Research Questions**
+## **Task 3: Research Questions**
 
 With the dataset selected and explored, four potential research questions are postulated.
 
-1. Which subsetted variables are most predictive of a malignant diagnosis?\n
+1. Is area_mean a significant predictor of a malignant diagnosis?\n
 
-2. Which subsetted variables are least predictive of a benign diagnosis?\n
+2. Is symmetry_mean a significant predictor of a benign diagnosis?\n
 
-3. Is the relationship between symmetry and diagnoses statistically significant?\n
+3. Is the relationship between symmetry_mean and smoothness_mean statistically significant?\n
 
-4. What is the strength of association between mean radius and area?\n
+4. What is the strength of association between mean radius and area in benign diagnoses?\n
 
+# **Milestone 2**
+
+Addressing each research question through manipulating and summarizing the cancer_sample data frame.  
+
+## **Task 1**
+
+**Question 1**: Is area_mean a significant predictor of a malignant diagnosis?\n
+
+To understand the relationship of area_mean and malignant diagnoses, the range, mean, median, and standard deviation across both outcomes will be computed.
+
+```{r malignant tibbles}
+tibble(cancer_sample) %>% #make new tibble to find range by category
+  select(diagnosis, area_mean) %>% #filter by malignant diagnoses
+  group_by(diagnosis) %>%
+  summarise(across(where(is.numeric), range)) # find range
+
+tibble(cancer_sample) %>% #make new tibble to find mean by category
+  select(diagnosis, area_mean) %>% #filter by malignant diagnoses
+  group_by(diagnosis) %>%
+  summarise(across(where(is.numeric), mean)) # find mean
+
+tibble(cancer_sample) %>% #make new tibble to find median by category
+  select(diagnosis, area_mean) %>% #filter by malignant diagnoses
+  group_by(diagnosis) %>%
+  summarise(across(where(is.numeric), median)) # find median
+
+tibble(cancer_sample) %>% #make tibble for standard deviation by category
+  select(diagnosis, area_mean) %>% #filter by malignant diagnoses
+  group_by(diagnosis) %>%
+  summarise(across(where(is.numeric), sd)) # find standard deviation
+
+ggplot(cancer_sample, #visualize relationship between area and diagnosis
+       aes(x = diagnosis,
+           y = area_mean)) +
+  geom_boxplot(aes(),
+             alpha = 0.4) + 
+  labs(x = "Diagnosis", #add labels
+       y = "Area (Mean)", 
+       caption = "Source: UCI, 1995")
+summary(aov(area_mean ~ diagnosis, data = cancer_sample)) #run ANOVA for significance
+summary(lm(area_mean ~ diagnosis, data = cancer_sample)) #quantify relationship
+```
