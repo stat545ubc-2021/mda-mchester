@@ -3,12 +3,12 @@ title: "Mini Data Analysis (Milestone 1)"
 author: "Marshall Chester"
 date: "09/10/2021"
 output:
-  html_document:
-    toc: true
-    toc_float: true
   github_document:
     toc: true
     toc_depth: 2
+  html_document:
+    toc: true
+    toc_float: true
 ---
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
@@ -210,7 +210,7 @@ tibble(cancer_sample) %>% #make tibble for standard deviation by category
 
 To visualize the relationship between the means of ```area_mean``` and ```diagnosis```, a boxplot will be created. 
 
-```{r area_mean vs diagnosis boxplot}
+```{r area_mean vs diagnosis boxplot, fig.align = "center"}
 ggplot(cancer_sample, #visualize relationship between area and diagnosis
        aes(x = diagnosis,
            y = area_mean)) +
@@ -240,7 +240,7 @@ With an F-value of 573.1 and p-value less than 0.05, there is a significant vari
 
 To visualize the means of each category, a boxplot containing a new category of symmetry_mean will be created. 
 
-```{r symmetry_mean category}
+```{r symmetry_mean category, fig.align = "center"}
 cancer_sample %>% 
   mutate(category_symmetry = cut(symmetry_mean, 
                         breaks = 3,
