@@ -57,10 +57,10 @@ library(tidyverse)
 
 ### **Initial ranking**
 
-1. flow_sample
-2. cancer_sample
-3. vancouver_trees
-4. apt_buildings
+1. ```flow_sample```
+2. ```cancer_sample```
+3. ```vancouver_trees```
+4. ```apt_buildings```
 
 ### **Dataset exploration**
 
@@ -83,10 +83,10 @@ class(apt_buildings)
 
 Dataset | Rows | Columns | Class | Potential Research Question 
 :------:|:----:|:-------:|:-----:|:-----------------|
-flow_sample | 218 | 7 | data.frame | Is maximum flow always within June and July?
-cancer_sample | 569 | 32 | data.frame | What is the average area of malignant diagnoses?
-vancouver_trees | 146,611 | 20 | data.frame | Which Vancouver neighbourhood has the greatest number of tree species?
-apt_buildings | 3,455 | 37 | data.frame | What percentage of buildings built before 2000 have air conditioning?
+```flow_sample``` | 218 | 7 | data.frame | Is maximum flow always within June and July?
+```cancer_sample``` | 569 | 32 | data.frame | What is the average area of malignant diagnoses?
+```vancouver_trees``` | 146,611 | 20 | data.frame | Which Vancouver neighbourhood has the greatest number of tree species?
+```apt_buildings``` | 3,455 | 37 | data.frame | What percentage of buildings built before 2000 have air conditioning?
 
 ### **Pair down**
 
@@ -94,15 +94,15 @@ After viewing the data, I decided to proceed with cancer_sample and apt_building
 
 ### **Final decision**
 
-I have decided to proceed with the cancer_sample dataset due to personal interest in healthcare. The dataset is robust with a significant number of variables and points for further evaluation. With subsetting, I believe this dataset is well suited for analysis of strength of association and predictive modeling.
+I have decided to proceed with the ```cancer_sample``` dataset due to personal interest in healthcare. The dataset is robust with a significant number of variables and points for further evaluation. With subsetting, I believe this dataset is well suited for analysis of strength of association and predictive modeling.
 
 ## **Task 2: Explore dataset**
 
-In the cancer_sample dataset, area_mean and radius_mean are continuous variables and can be explored by plotting each variable on the x and y axis, respectively. A positive, linear relationship is expected. By grouping data points with diagnosis (dichotomous variable), an interesting relationship could be seen.
+In the ```cancer_sample``` dataset, ```area_mean``` and ```radius_mean``` are continuous variables and can be explored by plotting each variable on the x and y axis, respectively. A positive, linear relationship is expected. By grouping data points with ```diagnosis``` (dichotomous variable), an interesting relationship could be seen.
 
 ### **New tibble**
 
-The cancer_sample includes 32 unique variables. A new tibble can be created to include the variables most interesting to the author. For the purpose of model building, this parsed tibble will help to create an efficient workflow. 
+The ````cancer_sample``` includes 32 unique variables. A new tibble can be created to include the variables most interesting to the author. For the purpose of model building, this parsed tibble will help to create an efficient workflow. 
 
 ```{r cancer tibble subset, fig.align = "centre"}
 tibble(cancer_sample) %>% #make new tibble of interested variables
@@ -111,7 +111,7 @@ tibble(cancer_sample) %>% #make new tibble of interested variables
 
 ### **Density plot**
 
-Peaks within a density help to understand where the data are concentrated. In the cancer_sample dataset, the area_mean variable provides continuous data on the average area of diagnoses. A density plot can be created to visualize the concentration of values for both malignant and benign diagnoses. With this visualization, a greater understanding is available. 
+Peaks within a density help to understand where the data are concentrated. In the ```cancer_sample``` dataset, the ```area_mean``` variable provides continuous data on the average area of diagnoses. A density plot can be created to visualize the concentration of values for both malignant and benign diagnoses. With this visualization, a greater understanding is available. 
 
 ```{r density plot, fig.align = "center"}
 ggplot(cancer_sample, #check density plot of area_mean
@@ -128,7 +128,7 @@ ggplot(cancer_sample, #check density plot of area_mean
 
 ### **Create boxplot**
 
-A boxplot can provide detailed information between dichotomous and continuous variables. In the cancer_sample dataset, diagnosis is dichotomous (malignant or benign) and symmetry_mean is continuous. A boxplot will help visualize the relationship between malignant and benign diagnoses. There may be an interesting outcome for further consideration.
+A boxplot can provide detailed information between dichotomous and continuous variables. In the ```cancer_sample``` dataset, diagnosis is dichotomous (malignant or benign) and ```symmetry_mean``` is continuous. A boxplot will help visualize the relationship between malignant and benign diagnoses. There may be an interesting outcome for further consideration.
 
 ```{r boxplot, fig.align = "center"}
 ggplot(cancer_sample, #create boxplot between 2 variables
@@ -168,23 +168,23 @@ ggplot(cancer_sample, #explore relationship between variables
 
 With the dataset selected and explored, four potential research questions are postulated.
 
-1. Is area_mean a significant predictor of a malignant diagnosis?\n
+1. Is area_mean a significant predictor of a malignant ```diagnosis```?\n
 
-2. Which category of symmetry_mean (low, medium, high) has the highest mean area_mean when grouped by diagnosis?\n
+2. Which category of ```symmetry_mean``` (low, medium, high) has the highest mean area_mean when grouped by diagnosis?\n
 
-3. Are perimeter_mean, smoothness_mean, and symmetry_mean normally distributed?\n
+3. Are ```perimeter_mean```, ```smoothness_mean```, and ```symmetry_mean``` normally distributed?\n
 
-4. Is perimeter_mean lognormally distributed?\n
+4. Is ```perimeter_mean``` lognormally distributed?\n
 
 # **Milestone 2**
 
-Addressing each research question through manipulating and summarizing the cancer_sample data frame.  
+Addressing each research question through manipulating and summarizing the ```cancer_sample``` data frame.  
 
 ## **Task 1**
 
-**Question 1**: Is area_mean a significant predictor of a malignant diagnosis?\n
+### **Question 1**: Is ```area_mean``` a significant predictor of a malignant diagnosis?\n
 
-To visualize the relationship of area_mean and malignant diagnoses, the range, mean, median, and standard deviation across both outcomes will be computed.
+To begin, summarized characteristics of ```area_mean``` will be tabled. 
 
 ```{r malignant tibbles}
 tibble(cancer_sample) %>% #make new tibble to find range by category
@@ -208,6 +208,8 @@ tibble(cancer_sample) %>% #make tibble for standard deviation by category
   summarise(across(where(is.numeric), sd)) # find standard deviation
 ```
 
+To visualize the relationship between the means of ```area_mean``` and ```diagnosis```, a boxplot will be created. 
+
 ```{r area_mean vs diagnosis boxplot}
 ggplot(cancer_sample, #visualize relationship between area and diagnosis
        aes(x = diagnosis,
@@ -221,13 +223,22 @@ ggplot(cancer_sample, #visualize relationship between area and diagnosis
        caption = "Source: UCI, 1995") +
   scale_x_discrete(breaks = c("B","M"), #change x tick
                    labels = c("Benign", "Malignant"))
+```
+
+An ANOVA test to determine the ratio of variability within and between grouped means of area_mean by diagnosis will be displayed. The summarized output will be printed.
+
+```{r significance area_mean}
 summary(aov(area_mean ~ diagnosis, data = cancer_sample)) #run ANOVA for differences of means
 #f-value of 573.1 and p less than 2*10^-16
 summary(lm(area_mean ~ diagnosis, data = cancer_sample)) #quantify relationship
 #t-value for malignant diagnosis 23.94
 ```
 
-**Question 2**: Which category of symmetry_mean (low, medium, high) has the highest mean area_mean?\n
+With an F-value of 573.1 and p-value less than 0.05, there is a significant variability of group means. Furthermore, a t-value greater than 2 (t-value = 23.94, p-value < 0.05) we can say with 95% confidence that the difference in means is statistically significant. Finally, a multiple r-squared value of 0.5027 indicates that greater than 50% of the variance in the response data is explained by the model. Therefore, ```area_mean``` is a significant predictor of a malignant diagnosis. 
+
+### **Question 2**: Which category of ```symmetry_mean``` (low, medium, high) has the highest mean area_mean?\n
+
+To visualize the means of each category, a boxplot containing a new category of symmetry_mean will be created. 
 
 ```{r symmetry_mean category}
 cancer_sample %>% 
@@ -250,12 +261,16 @@ cancer_sample %>%
                           name = "Diagnosis")
 ```
 
-**Question 3**: Are perimeter_mean, smoothness_mean, and symmetry_mean normally distributed?\n
+Therefore, it can be concluded that the category of "high" in ```symmetry_mean``` produces the highest mean ```area_mean``` across all categories.
+
+### **Question 3**: Are ```perimeter_mean```, ```smoothness_mean```, and ```symmetry_mean``` normally distributed?\n 
+
+To visualize the normal distribution, histograms and qq plots for each variable will be created. Different sized bins will be allocated to each histogram. 
 
 ```{r perimeter histogram, fig.align = "center"}
 ggplot(cancer_sample,
        aes(perimeter_mean)) +
-  geom_histogram(bins = 25) + 
+  geom_histogram(bins = 30) + 
     labs(x = "Perimeter (Mean)", #add labels
        y = "Count", 
        caption = "Source: UCI, 1995")
@@ -285,7 +300,7 @@ ggplot(cancer_sample,
 ```{r symmetry histogram, fig.align = "center"}
 ggplot(cancer_sample,
        aes(symmetry_mean)) +
-  geom_histogram(bins = 25) + 
+  geom_histogram(bins = 20) + 
     labs(x = "Symmetry (Mean)", #add labels
        y = "Count", 
        caption = "Source: UCI, 1995")
@@ -297,7 +312,9 @@ ggplot(cancer_sample,
   stat_qq() + stat_qq_line()
 ```
 
-4. Is perimeter_mean lognormally distributed?\n
+The ```perimeter_mean``` histogram appears to be lognormal with concentrated values below the mean and right skew. The qq plot appears to show non-normal deviation from the qq line. The ```smoothness_mean``` and ```symmetry_mean``` histograms appear normal with concentrated values about the mean and no skew. The qq plots show normal distribution.
+
+### **Question 4**: Is ```perimeter_mean``` lognormally distributed?
 
 ```{r perimeter log-transformed histogram, fig.align = "center"}
 ggplot(cancer_sample,
@@ -317,5 +334,67 @@ ggplot(cancer_sample,
   stat_qq() + stat_qq_line()
 ```
 
+After log transformation, the ```perimeter_mean``` histogram appears to be concentrated about the mean without skew. The log-transformed qq plot now follows a distribution more indicative of a normal distribution. Therefore, the ```perimeter_mean``` variable is log-normally distributed. 
+
 ## **Task 2**
 
+### **Tidy Data**
+
+All datasets should be tidy and reshaped to ensure: 
+
+* each row is an observation
+* each column is a variable
+* each cell is a value
+
+To following tibble used for the analysis is in tidy format. 
+
+```{r cancer tibble subset original tidy, fig.align = "centre"}
+tibble(cancer_sample) %>% 
+  select(diagnosis, radius_mean, perimeter_mean, area_mean, smoothness_mean, symmetry_mean)
+```
+
+In the ```cancer_sample```, each row is an observation. Each column is a unique variable of the tumour, and each cell is a value in the form of numbers (quantitative) or strings (qualitative). In its current format, the data meets the criteria of tidy data. 
+
+In this next example, the data will be untidied. The data will now include a new column with multiple variables, observations, and values within the ```age_sex``` column.
+
+```{r cancer tibble subset untidy, fig.align = "centre"}
+tibble(cancer_sample) %>% 
+  select(diagnosis, radius_mean, perimeter_mean, area_mean, smoothness_mean, symmetry_mean) %>%
+  mutate(age_sex = sample(c("male","female", 18:85), size = 569, rep = TRUE)) #add untidy column 
+```
+
+The data is now tidied back to original format. 
+
+```{r cancer tibble subset tidy, fig.align = "centre"}
+tibble(cancer_sample) %>% 
+  select(diagnosis, radius_mean, perimeter_mean, area_mean, smoothness_mean, symmetry_mean) %>% 
+  mutate(age_sex = sample(c("male","female", 18:85), size = 569, rep = TRUE)) %>%
+  select(-age_sex) #delete column and return to original
+```
+
+### **Select final questions**
+
+For the purpose of completing Milestone 3, questions 1 and 2 will be selected for further analysis. For question 1, additional variables can be added to create predictive models. For question 2, an analysis of the significance of the difference in means can be postulated. Both of these activities are of greatest interest to the author. 
+
+**Proposed additions to questions**:
+
+1. Are ```area_mean``` and ```symmetry_mean``` both significant predictors of a malignant diagnosis?\n
+
+```{r cancer subset question 1 tibble, fig.align = "centre"}
+tibble(cancer_sample) %>%
+  mutate(-radius_mean) %>% #remove column
+  select(diagnosis, area_mean, symmetry_mean) %>% # select only these variables
+  filter(area_mean < 2300) %>% #eliminate potential outliers
+  arrange(desc(area_mean))
+```
+2. Is the difference of means between the categories of ```symmetry_mean``` (low, medium, high) statistically significant?\n
+
+```{r cancer subset question 2 tibble, fig.align = "centre"}
+tibble(cancer_sample) %>%
+   mutate(category_symmetry = cut(symmetry_mean, 
+                        breaks = 3,
+                      labels = c("low","medium","high"))) %>%
+  select(diagnosis, symmetry_mean, category_symmetry) %>% # select only these variables
+  filter(symmetry_mean < 0.3) %>% #eliminate potential outliers
+  arrange(desc(symmetry_mean))
+```
