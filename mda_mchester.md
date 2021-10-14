@@ -244,10 +244,10 @@ ggplot(cancer_sample, #explore relationship between variables
 With the dataset selected and explored, four potential research
 questions are postulated.
 
-1.  Is area_mean a significant predictor of a malignant `diagnosis`?
+1.  Is `area_mean` a significant predictor of a malignant `diagnosis`?
 
 2.  Which category of `symmetry_mean` (low, medium, high) has the
-    highest mean area_mean when grouped by diagnosis?
+    highest mean `area_mean` when grouped by diagnosis?
 
 3.  Are `perimeter_mean`, `smoothness_mean`, and `symmetry_mean`
     normally distributed?
@@ -532,41 +532,15 @@ All datasets should be tidy and reshaped to ensure:
 -   each column is a variable
 -   each cell is a value
 
-To following tibble used for the analysis is in tidy format.
-
-``` r
-tibble(cancer_sample) %>% 
-  select(diagnosis, radius_mean, perimeter_mean, area_mean, smoothness_mean, symmetry_mean)
-```
-
-    ## # A tibble: 569 × 6
-    ##    diagnosis radius_mean perimeter_mean area_mean smoothness_mean symmetry_mean
-    ##    <chr>           <dbl>          <dbl>     <dbl>           <dbl>         <dbl>
-    ##  1 M                18.0          123.      1001           0.118          0.242
-    ##  2 M                20.6          133.      1326           0.0847         0.181
-    ##  3 M                19.7          130       1203           0.110          0.207
-    ##  4 M                11.4           77.6      386.          0.142          0.260
-    ##  5 M                20.3          135.      1297           0.100          0.181
-    ##  6 M                12.4           82.6      477.          0.128          0.209
-    ##  7 M                18.2          120.      1040           0.0946         0.179
-    ##  8 M                13.7           90.2      578.          0.119          0.220
-    ##  9 M                13             87.5      520.          0.127          0.235
-    ## 10 M                12.5           84.0      476.          0.119          0.203
-    ## # … with 559 more rows
-
-In the `cancer_sample`, each row is an observation. Each column is a
-unique variable of the tumour, and each cell is a value in the form of
-numbers (quantitative) or strings (qualitative). In its current format,
-the data meets the criteria of tidy data.
-
-In this next example, the data will be untidied. The data will now
-include a new column with multiple variables, observations, and values
-within the `age_sex` column.
+The following tibble used for the analysis of each research question is
+in tidy format.
 
 ``` r
 tibble(cancer_sample) %>% 
   select(diagnosis, radius_mean, perimeter_mean, area_mean, smoothness_mean, symmetry_mean) %>%
-  mutate(age_sex = sample(c("male","female", 18:85), size = 569, rep = TRUE)) #add untidy column 
+  mutate(category_symmetry = cut(symmetry_mean, 
+                        breaks = 3,
+                      labels = c("low","medium","high")))
 ```
 
     ## # A tibble: 569 × 7
@@ -582,18 +556,27 @@ tibble(cancer_sample) %>%
     ##  8 M                13.7           90.2      578.          0.119          0.220
     ##  9 M                13             87.5      520.          0.127          0.235
     ## 10 M                12.5           84.0      476.          0.119          0.203
-    ## # … with 559 more rows, and 1 more variable: age_sex <chr>
+    ## # … with 559 more rows, and 1 more variable: category_symmetry <fct>
 
-The data is now tidied back to original format.
+In the `cancer_sample` dataset, each row is an observation. Each column
+is a unique variable of the tumour, and each cell is a value in the form
+of numbers (quantitative) or strings (qualitative). In its current
+format, the data meets the criteria of tidy data.
+
+In this next example, the data will be untidied. The data will now
+include a new column with multiple variables, observations, and values
+within the `age_sex` column.
 
 ``` r
 tibble(cancer_sample) %>% 
-  select(diagnosis, radius_mean, perimeter_mean, area_mean, smoothness_mean, symmetry_mean) %>% 
-  mutate(age_sex = sample(c("male","female", 18:85), size = 569, rep = TRUE)) %>%
-  select(-age_sex) #delete column and return to original
+  select(diagnosis, radius_mean, perimeter_mean, area_mean, smoothness_mean, symmetry_mean) %>%
+  mutate(category_symmetry = cut(symmetry_mean, 
+                        breaks = 3,
+                      labels = c("low","medium","high"))) %>%
+  mutate(age_sex = sample(c("male","female", 18:85), size = 569, rep = TRUE)) #add untidy column 
 ```
 
-    ## # A tibble: 569 × 6
+    ## # A tibble: 569 × 8
     ##    diagnosis radius_mean perimeter_mean area_mean smoothness_mean symmetry_mean
     ##    <chr>           <dbl>          <dbl>     <dbl>           <dbl>         <dbl>
     ##  1 M                18.0          123.      1001           0.118          0.242
@@ -606,7 +589,38 @@ tibble(cancer_sample) %>%
     ##  8 M                13.7           90.2      578.          0.119          0.220
     ##  9 M                13             87.5      520.          0.127          0.235
     ## 10 M                12.5           84.0      476.          0.119          0.203
-    ## # … with 559 more rows
+    ## # … with 559 more rows, and 2 more variables: category_symmetry <fct>,
+    ## #   age_sex <chr>
+
+The data is now tidied back to original format.
+
+``` r
+tibble(cancer_sample) %>% 
+  select(diagnosis, radius_mean, perimeter_mean, area_mean, smoothness_mean, symmetry_mean) %>%
+  mutate(category_symmetry = cut(symmetry_mean, 
+                        breaks = 3,
+                      labels = c("low","medium","high"))) %>% 
+  mutate(age_sex = sample(c("male","female", 18:85), size = 569, rep = TRUE)) %>%
+  mutate(category_symmetry = cut(symmetry_mean, 
+                        breaks = 3,
+                      labels = c("low","medium","high"))) %>%
+  select(-age_sex) #delete column and return to original
+```
+
+    ## # A tibble: 569 × 7
+    ##    diagnosis radius_mean perimeter_mean area_mean smoothness_mean symmetry_mean
+    ##    <chr>           <dbl>          <dbl>     <dbl>           <dbl>         <dbl>
+    ##  1 M                18.0          123.      1001           0.118          0.242
+    ##  2 M                20.6          133.      1326           0.0847         0.181
+    ##  3 M                19.7          130       1203           0.110          0.207
+    ##  4 M                11.4           77.6      386.          0.142          0.260
+    ##  5 M                20.3          135.      1297           0.100          0.181
+    ##  6 M                12.4           82.6      477.          0.128          0.209
+    ##  7 M                18.2          120.      1040           0.0946         0.179
+    ##  8 M                13.7           90.2      578.          0.119          0.220
+    ##  9 M                13             87.5      520.          0.127          0.235
+    ## 10 M                12.5           84.0      476.          0.119          0.203
+    ## # … with 559 more rows, and 1 more variable: category_symmetry <fct>
 
 ### **Select final questions**
 

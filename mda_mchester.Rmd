@@ -168,9 +168,9 @@ ggplot(cancer_sample, #explore relationship between variables
 
 With the dataset selected and explored, four potential research questions are postulated.
 
-1. Is area_mean a significant predictor of a malignant ```diagnosis```?\n
+1. Is ```area_mean``` a significant predictor of a malignant ```diagnosis```?\n
 
-2. Which category of ```symmetry_mean``` (low, medium, high) has the highest mean area_mean when grouped by diagnosis?\n
+2. Which category of ```symmetry_mean``` (low, medium, high) has the highest mean ```area_mean``` when grouped by diagnosis?\n
 
 3. Are ```perimeter_mean```, ```smoothness_mean```, and ```symmetry_mean``` normally distributed?\n
 
@@ -346,20 +346,26 @@ All datasets should be tidy and reshaped to ensure:
 * each column is a variable
 * each cell is a value
 
-To following tibble used for the analysis is in tidy format. 
+The following tibble used for the analysis of each research question is in tidy format. 
 
 ```{r cancer tibble subset original tidy, fig.align = "centre"}
 tibble(cancer_sample) %>% 
-  select(diagnosis, radius_mean, perimeter_mean, area_mean, smoothness_mean, symmetry_mean)
+  select(diagnosis, radius_mean, perimeter_mean, area_mean, smoothness_mean, symmetry_mean) %>%
+  mutate(category_symmetry = cut(symmetry_mean, 
+                        breaks = 3,
+                      labels = c("low","medium","high")))
 ```
 
-In the ```cancer_sample```, each row is an observation. Each column is a unique variable of the tumour, and each cell is a value in the form of numbers (quantitative) or strings (qualitative). In its current format, the data meets the criteria of tidy data. 
+In the ```cancer_sample``` dataset, each row is an observation. Each column is a unique variable of the tumour, and each cell is a value in the form of numbers (quantitative) or strings (qualitative). In its current format, the data meets the criteria of tidy data. 
 
 In this next example, the data will be untidied. The data will now include a new column with multiple variables, observations, and values within the ```age_sex``` column.
 
 ```{r cancer tibble subset untidy, fig.align = "centre"}
 tibble(cancer_sample) %>% 
   select(diagnosis, radius_mean, perimeter_mean, area_mean, smoothness_mean, symmetry_mean) %>%
+  mutate(category_symmetry = cut(symmetry_mean, 
+                        breaks = 3,
+                      labels = c("low","medium","high"))) %>%
   mutate(age_sex = sample(c("male","female", 18:85), size = 569, rep = TRUE)) #add untidy column 
 ```
 
@@ -367,8 +373,14 @@ The data is now tidied back to original format.
 
 ```{r cancer tibble subset tidy, fig.align = "centre"}
 tibble(cancer_sample) %>% 
-  select(diagnosis, radius_mean, perimeter_mean, area_mean, smoothness_mean, symmetry_mean) %>% 
+  select(diagnosis, radius_mean, perimeter_mean, area_mean, smoothness_mean, symmetry_mean) %>%
+  mutate(category_symmetry = cut(symmetry_mean, 
+                        breaks = 3,
+                      labels = c("low","medium","high"))) %>% 
   mutate(age_sex = sample(c("male","female", 18:85), size = 569, rep = TRUE)) %>%
+  mutate(category_symmetry = cut(symmetry_mean, 
+                        breaks = 3,
+                      labels = c("low","medium","high"))) %>%
   select(-age_sex) #delete column and return to original
 ```
 
