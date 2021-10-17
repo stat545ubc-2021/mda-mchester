@@ -258,7 +258,7 @@ tibble(cancer_sample) %>%
 
 In the ```cancer_sample``` dataset, each row is an observation. Each column is a unique variable of the tumour, and each cell is a value in the form of numbers (quantitative) or strings (qualitative). In its current format, the data meets the criteria of tidy data. 
 
-In this next example, the data will be untidied. The data will now include a new column with multiple variables, observations, and values within the ```age_sex``` column.
+In this next example, the data will be untidied. The data will now include a new column with multiple variables, observations, and values within the ```radius_mean```` column.
 
 ```{r cancer tibble subset untidy, fig.align = "centre"}
 tibble(cancer_sample) %>% 
@@ -266,22 +266,17 @@ tibble(cancer_sample) %>%
   mutate(category_symmetry = cut(symmetry_mean, 
                         breaks = 3,
                       labels = c("low","medium","high"))) %>%
-  mutate(age_sex = sample(c("male","female", 18:85), size = 569, rep = TRUE)) #add untidy column 
+  mutate(radius_mean = sample(c("male","female", 18:85), #add untidy column 
+                              size = 569,
+                              rep = TRUE))
 ```
 
-The data is now tidied back to original format. 
+The data is will now be tidied back to original format. 
 
 ```{r cancer tibble subset tidy, fig.align = "centre"}
 tibble(cancer_sample) %>% 
   select(diagnosis, radius_mean, perimeter_mean, area_mean, smoothness_mean, symmetry_mean) %>%
-  mutate(category_symmetry = cut(symmetry_mean, 
-                        breaks = 3,
-                      labels = c("low","medium","high"))) %>% 
-  mutate(age_sex = sample(c("male","female", 18:85), size = 569, rep = TRUE)) %>%
-  mutate(category_symmetry = cut(symmetry_mean, 
-                        breaks = 3,
-                      labels = c("low","medium","high"))) %>%
-  select(-age_sex) #delete column and return to original
+  mutate(radius_mean = cancer_sample$radius_mean) #return to original data set
 ```
 ### **Select final questions**
 
