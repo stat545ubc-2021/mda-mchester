@@ -413,7 +413,7 @@ format, the data meets the criteria of tidy data.
 
 In this next example, the data will be untidied. The data will now
 include a new column with multiple variables, observations, and values
-within the \`\`\`radius_mean\`\`\`\` column.
+within the \`\`\`radius_mean\`\`\` column.
 
 ``` r
 tibble(cancer_sample) %>% 
@@ -446,6 +446,9 @@ The data will now be tidied back to original format.
 ``` r
 tibble(cancer_sample) %>% 
   select(diagnosis, radius_mean, perimeter_mean, area_mean, smoothness_mean, symmetry_mean) %>%
+  mutate(category_symmetry = cut(symmetry_mean, 
+                        breaks = 3,
+                        labels = c("low","medium","high"))) %>%
   mutate(radius_mean = cancer_sample$radius_mean) #return to original data set
 ```
 
