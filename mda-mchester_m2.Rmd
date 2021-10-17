@@ -271,11 +271,14 @@ tibble(cancer_sample) %>%
                               rep = TRUE))
 ```
 
-The data is will now be tidied back to original format. 
+The data will now be tidied back to original format. 
 
 ```{r cancer tibble subset tidy, fig.align = "centre"}
 tibble(cancer_sample) %>% 
   select(diagnosis, radius_mean, perimeter_mean, area_mean, smoothness_mean, symmetry_mean) %>%
+  mutate(category_symmetry = cut(symmetry_mean, 
+                        breaks = 3,
+                        labels = c("low","medium","high"))) %>%
   mutate(radius_mean = cancer_sample$radius_mean) #return to original data set
 ```
 ### **Select final questions**
