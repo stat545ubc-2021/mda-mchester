@@ -65,17 +65,13 @@ library(tidyverse)
 ### **Dataset exploration**
 
 ```{r exploration}
-dim(flow_sample)
-class(flow_sample)
+glimpse(flow_sample)
 
-dim(cancer_sample)
-class(cancer_sample)
+glimpse(cancer_sample)
 
-dim(vancouver_trees)
-class(vancouver_trees)
+glimpse(vancouver_trees)
 
-dim(apt_buildings)
-class(apt_buildings)
+glimpse(apt_buildings)
 
 ```
 
@@ -125,6 +121,8 @@ ggplot(cancer_sample, #check density plot of area_mean
     limits = c("B", "M"),
                       labels = c("Benign", "Malignant"))
 ```
+
+The ```area_mean``` of benign diagnoses are clustered around 500, while the ```area_mean``` of malignant diagnoses appears to potentially be bimodal clustered around 750 and 1250.
 
 ### **Create boxplot**
 
