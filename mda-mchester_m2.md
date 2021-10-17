@@ -14,6 +14,18 @@ manipulating and summarizing the `cancer_sample` data frame.
 
 ## **Task 1**
 
+Research questions:
+
+1.  Is `area_mean` a significant predictor of a malignant diagnosis?
+
+2.  Which category of `symmetry_mean` (low, medium, high) has the
+    highest mean area_mean?
+
+3.  Are `perimeter_mean`, `smoothness_mean`, and `symmetry_mean`
+    normally distributed?
+
+4.  Is `perimeter_mean` lognormally distributed?
+
 ### **Question 1**: Is `area_mean` a significant predictor of a malignant diagnosis?
 
 To begin, summarized characteristics of `area_mean` will be tabled.

@@ -19,34 +19,50 @@ library(tidyverse)
 
 # **Milestone 2**
 
-The focus of Milestone 2 is to address each research question through manipulating and summarizing the ```cancer_sample``` data frame.  
+The focus of Milestone 2 is to address each research question through manipulating and summarizing the ```cancer_sample``` data frame.
 
 ## **Task 1**
+
+Research questions:
+
+1. Is ```area_mean``` a significant predictor of a malignant diagnosis?
+
+2. Which category of ```symmetry_mean``` (low, medium, high) has the highest mean area_mean?
+
+3. Are ```perimeter_mean```, ```smoothness_mean```, and ```symmetry_mean``` normally distributed?
+
+4. Is ```perimeter_mean``` lognormally distributed?
 
 ### **Question 1**: Is ```area_mean``` a significant predictor of a malignant diagnosis?\n
 
 To begin, summarized characteristics of ```area_mean``` will be tabled. 
 
-```{r malignant tibbles}
+```{r area_mean range}
 tibble(cancer_sample) %>% #make new tibble to find range by category
-  select(diagnosis, area_mean) %>% #filter by malignant diagnoses
-  group_by(diagnosis) %>%
-  summarise(across(where(is.numeric), range)) # find range
+  select(diagnosis, area_mean) %>% #select area mean
+  group_by(diagnosis) %>% #group by diagnoses
+  summarise(across(where(is.numeric), range)) #find range
+```
 
+```{r area_mean mean}
 tibble(cancer_sample) %>% #make new tibble to find mean by category
-  select(diagnosis, area_mean) %>% #filter by malignant diagnoses
-  group_by(diagnosis) %>%
-  summarise(across(where(is.numeric), mean)) # find mean
+  select(diagnosis, area_mean) %>% #select area mean
+  group_by(diagnosis) %>% #group by diagnoses
+  summarise(across(where(is.numeric), mean)) # ind mean
+```
 
+```{r area_mean median}
 tibble(cancer_sample) %>% #make new tibble to find median by category
-  select(diagnosis, area_mean) %>% #filter by malignant diagnoses
-  group_by(diagnosis) %>%
-  summarise(across(where(is.numeric), median)) # find median
+  select(diagnosis, area_mean) %>% #select area mean
+  group_by(diagnosis) %>% #group by diagnoses
+  summarise(across(where(is.numeric), median)) #find median
+```
 
+```{r area_mean standard deviation}
 tibble(cancer_sample) %>% #make tibble for standard deviation by category
-  select(diagnosis, area_mean) %>% #filter by malignant diagnoses
-  group_by(diagnosis) %>%
-  summarise(across(where(is.numeric), sd)) # find standard deviation
+  select(diagnosis, area_mean) %>% #select area mean
+  group_by(diagnosis) %>% #group by diagnoses
+  summarise(across(where(is.numeric), sd)) #find standard deviation
 ```
 
 To visualize the relationship between the means of ```area_mean``` and ```diagnosis```, a boxplot will be created. 
@@ -82,11 +98,11 @@ With an F-value of 573.1 and p-value less than 0.05, there is a significant vari
 To visualize the means of each category, a boxplot containing a new category of symmetry_mean will be created. 
 
 ```{r symmetry_mean category, fig.align = "center"}
-cancer_sample %>% 
+cancer_sample %>% #create categorical variable
   mutate(category_symmetry = cut(symmetry_mean, 
                         breaks = 3,
                       labels = c("low","medium","high"))) %>%
-  ggplot(aes(x = category_symmetry,
+  ggplot(aes(x = category_symmetry, #create boxplot
            y = area_mean)) +
   geom_boxplot(aes(),
              alpha = 0.4) +
@@ -105,6 +121,36 @@ cancer_sample %>%
 Therefore, it can be concluded that the category of "high" in ```symmetry_mean``` produces the highest mean ```area_mean``` across all categories.
 
 ### **Question 3**: Are ```perimeter_mean```, ```smoothness_mean```, and ```symmetry_mean``` normally distributed?\n 
+
+Summary statistics of ```perimeter_mean``` will be displayed.
+
+```{r summary of perimeter_mean range}
+tibble(cancer_sample) %>% #make new tibble to find range by category
+  select(diagnosis, perimeter_mean) %>% #select perimeter mean
+  group_by(diagnosis) %>% #group by diagnoses
+  summarise(across(where(is.numeric), range)) #find range
+```
+
+```{r summary of perimeter_mean mean}
+tibble(cancer_sample) %>% #make new tibble to find mean by category
+  select(diagnosis, perimeter_mean) %>% #select perimeter mean
+  group_by(diagnosis) %>% #group by diagnoses
+  summarise(across(where(is.numeric), mean)) #find mean
+```
+
+``````{r summary of perimeter_mean median}
+tibble(cancer_sample) %>% #make new tibble to find median by category
+  select(diagnosis, perimeter_mean) %>% #select perimeter mean
+  group_by(diagnosis) %>% #group by diagnoses
+  summarise(across(where(is.numeric), median)) #find median
+```
+
+```{r summary of perimeter_mean standard deviation}
+tibble(cancer_sample) %>% #make tibble for standard deviation by category
+  select(diagnosis, perimeter_mean) %>% #select perimeter mean
+  group_by(diagnosis) %>% #group by diagnoses
+  summarise(across(where(is.numeric), sd)) #find standard deviation
+```
 
 To visualize the normal distribution, histograms and qq plots for each variable will be created. Different sized bins will be allocated to each histogram. 
 
@@ -157,8 +203,17 @@ The ```perimeter_mean``` histogram appears to be lognormal with concentrated val
 
 ### **Question 4**: Is ```perimeter_mean``` lognormally distributed?
 
+The number of observations in the malignant variable will be calculated.
+
+```{r malignant observations}
+tibble(cancer_sample) %>% #make tibble
+  select(diagnosis, perimeter_mean) %>% 
+  filter(diagnosis == "M") %>% #filter by diagnoses
+  count(diagnosis) # count number of observations
+```
+
 ```{r perimeter log-transformed histogram, fig.align = "center"}
-ggplot(cancer_sample,
+ggplot(cancer_sample, #make logarithmic graph
        aes(perimeter_mean,
            log = "y")) +
   geom_histogram(bins = 25) + 
@@ -179,7 +234,7 @@ After log transformation, the ```perimeter_mean``` histogram appears to be conce
 
 ### **Conclusions**
 
-The research questions have been slightly altered to produce conclusive findings for Milestone 2. At this juncture, ```area_mean``` and ```symmetry_mean``` are producing the most interesting results and a further investigation into the relationship between these variables and ```diagnosis``` is most compelling to the author. To initiate this investigation, the research questions will be refined in a later section of the report.
+The research questions have been slightly altered from Milestone 1 to produce reasonably conclusive findings for Milestone 2. At this juncture, ```area_mean``` and ```symmetry_mean``` are producing the most interesting results and a further investigation into the relationship between these variables and ```diagnosis``` is most compelling to the author. To initiate this investigation, the research questions will be refined in a later section of the report.
 
 ## **Task 2**
 
