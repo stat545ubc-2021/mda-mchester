@@ -138,7 +138,7 @@ tibble(cancer_sample) %>% #make new tibble to find mean by category
   summarise(across(where(is.numeric), mean)) #find mean
 ```
 
-``````{r summary of perimeter_mean median}
+```{r summary of perimeter_mean median}
 tibble(cancer_sample) %>% #make new tibble to find median by category
   select(diagnosis, perimeter_mean) %>% #select perimeter mean
   group_by(diagnosis) %>% #group by diagnoses
