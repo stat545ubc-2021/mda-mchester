@@ -336,8 +336,8 @@ questions are postulated.
 
 # **Milestone 2**
 
-Addressing each research question through manipulating and summarizing
-the `cancer_sample` data frame.
+The focus of Milestone 2 is to address each research question through
+manipulating and summarizing the `cancer_sample` data frame.
 
 ## **Task 1**
 
@@ -602,6 +602,16 @@ concentrated about the mean without skew. The log-transformed qq plot
 now follows a distribution more indicative of a normal distribution.
 Therefore, the `perimeter_mean` variable is log-normally distributed.
 
+### **Conclusions**
+
+The research questions have been slightly altered to produce conclusive
+findings for Milestone 2. At this juncture, `area_mean` and
+`symmetry_mean` are producing the most interesting results and a further
+investigation into the relationship between these variables and
+`diagnosis` is most compelling to the author. To initiate this
+investigation, the research questions will be refined in a later section
+of the report.
+
 ## **Task 2**
 
 ### **Tidy Data**
@@ -704,11 +714,13 @@ tibble(cancer_sample) %>%
 
 ### **Select final questions**
 
-For the purpose of completing Milestone 3, questions 1 and 2 will be
-selected for further analysis. For question 1, additional variables can
-be added to create predictive models. For question 2, an analysis of the
-significance of the difference in means can be postulated. Both of these
-activities are of greatest interest to the author.
+The questions proposed in Milestone 2 are essentially for the purpose of
+completing Milestone 3, questions 1 and 2 will are selectd and will be
+refined for further analysis. For question 1, additional variables
+(`symmetry_mean`) will be added to create predictive models. For
+question 2, an analysis of the significance of the difference in means
+can be postulated. Model building and tests of significance between
+means are of the greatest interest to the author.
 
 **Proposed additions to questions**:
 
