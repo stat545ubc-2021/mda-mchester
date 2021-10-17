@@ -413,50 +413,44 @@ format, the data meets the criteria of tidy data.
 
 In this next example, the data will be untidied. The data will now
 include a new column with multiple variables, observations, and values
-within the `age_sex` column.
+within the \`\`\`radius_mean\`\`\`\` column.
 
 ``` r
 tibble(cancer_sample) %>% 
   select(diagnosis, radius_mean, perimeter_mean, area_mean, smoothness_mean, symmetry_mean) %>%
   mutate(category_symmetry = cut(symmetry_mean, 
                         breaks = 3,
-                      labels = c("low","medium","high"))) %>%
-  mutate(age_sex = sample(c("male","female", 18:85), size = 569, rep = TRUE)) #add untidy column 
-```
-
-    ## # A tibble: 569 × 8
-    ##    diagnosis radius_mean perimeter_mean area_mean smoothness_mean symmetry_mean
-    ##    <chr>           <dbl>          <dbl>     <dbl>           <dbl>         <dbl>
-    ##  1 M                18.0          123.      1001           0.118          0.242
-    ##  2 M                20.6          133.      1326           0.0847         0.181
-    ##  3 M                19.7          130       1203           0.110          0.207
-    ##  4 M                11.4           77.6      386.          0.142          0.260
-    ##  5 M                20.3          135.      1297           0.100          0.181
-    ##  6 M                12.4           82.6      477.          0.128          0.209
-    ##  7 M                18.2          120.      1040           0.0946         0.179
-    ##  8 M                13.7           90.2      578.          0.119          0.220
-    ##  9 M                13             87.5      520.          0.127          0.235
-    ## 10 M                12.5           84.0      476.          0.119          0.203
-    ## # … with 559 more rows, and 2 more variables: category_symmetry <fct>,
-    ## #   age_sex <chr>
-
-The data is now tidied back to original format.
-
-``` r
-tibble(cancer_sample) %>% 
-  select(diagnosis, radius_mean, perimeter_mean, area_mean, smoothness_mean, symmetry_mean) %>%
-  mutate(category_symmetry = cut(symmetry_mean, 
-                        breaks = 3,
-                      labels = c("low","medium","high"))) %>% 
-  mutate(age_sex = sample(c("male","female", 18:85), size = 569, rep = TRUE)) %>%
-  mutate(category_symmetry = cut(symmetry_mean, 
-                        breaks = 3,
-                      labels = c("low","medium","high"))) %>%
-  select(-age_sex) #delete column and return to original
+                        labels = c("low","medium","high"))) %>%
+  mutate(radius_mean = sample(c("male","female", 18:85), #add untidy column 
+                              size = 569,
+                              rep = TRUE))
 ```
 
     ## # A tibble: 569 × 7
     ##    diagnosis radius_mean perimeter_mean area_mean smoothness_mean symmetry_mean
+    ##    <chr>     <chr>                <dbl>     <dbl>           <dbl>         <dbl>
+    ##  1 M         51                   123.      1001           0.118          0.242
+    ##  2 M         29                   133.      1326           0.0847         0.181
+    ##  3 M         84                   130       1203           0.110          0.207
+    ##  4 M         43                    77.6      386.          0.142          0.260
+    ##  5 M         74                   135.      1297           0.100          0.181
+    ##  6 M         30                    82.6      477.          0.128          0.209
+    ##  7 M         42                   120.      1040           0.0946         0.179
+    ##  8 M         29                    90.2      578.          0.119          0.220
+    ##  9 M         70                    87.5      520.          0.127          0.235
+    ## 10 M         39                    84.0      476.          0.119          0.203
+    ## # … with 559 more rows, and 1 more variable: category_symmetry <fct>
+
+The data is will now be tidied back to original format.
+
+``` r
+tibble(cancer_sample) %>% 
+  select(diagnosis, radius_mean, perimeter_mean, area_mean, smoothness_mean, symmetry_mean) %>%
+  mutate(radius_mean = cancer_sample$radius_mean) #return to original data set
+```
+
+    ## # A tibble: 569 × 6
+    ##    diagnosis radius_mean perimeter_mean area_mean smoothness_mean symmetry_mean
     ##    <chr>           <dbl>          <dbl>     <dbl>           <dbl>         <dbl>
     ##  1 M                18.0          123.      1001           0.118          0.242
     ##  2 M                20.6          133.      1326           0.0847         0.181
@@ -468,7 +462,7 @@ tibble(cancer_sample) %>%
     ##  8 M                13.7           90.2      578.          0.119          0.220
     ##  9 M                13             87.5      520.          0.127          0.235
     ## 10 M                12.5           84.0      476.          0.119          0.203
-    ## # … with 559 more rows, and 1 more variable: category_symmetry <fct>
+    ## # … with 559 more rows
 
 ### **Select final questions**
 

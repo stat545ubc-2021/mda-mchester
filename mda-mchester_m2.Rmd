@@ -258,7 +258,7 @@ tibble(cancer_sample) %>%
 
 In the ```cancer_sample``` dataset, each row is an observation. Each column is a unique variable of the tumour, and each cell is a value in the form of numbers (quantitative) or strings (qualitative). In its current format, the data meets the criteria of tidy data. 
 
-In this next example, the data will be untidied. The data will now include a new column with multiple variables, observations, and values within the ```radius_mean```` column.
+In this next example, the data will be untidied with the addition of categorical and continuous variables in the ```radius_mean``` column.
 
 ```{r cancer tibble subset untidy, fig.align = "centre"}
 tibble(cancer_sample) %>% 
