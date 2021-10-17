@@ -52,7 +52,7 @@ tibble(cancer_sample) %>% #make new tibble to find range by category
 tibble(cancer_sample) %>% #make new tibble to find mean by category
   select(diagnosis, area_mean) %>% #select area mean
   group_by(diagnosis) %>% #group by diagnoses
-  summarise(across(where(is.numeric), mean)) # ind mean
+  summarise(across(where(is.numeric), mean)) #find mean
 ```
 
     ## # A tibble: 2 × 2
@@ -488,7 +488,7 @@ means are of the greatest interest to the author.
 ``` r
 tibble(cancer_sample) %>%
   mutate(-radius_mean) %>% #remove column
-  select(diagnosis, area_mean, symmetry_mean) %>% # select only these variables
+  select(diagnosis, area_mean, symmetry_mean) %>% #select only these variables
   filter(area_mean < 2300) %>% #eliminate potential outliers
   arrange(desc(area_mean))
 ```
