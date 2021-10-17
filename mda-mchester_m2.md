@@ -441,7 +441,7 @@ tibble(cancer_sample) %>%
     ## 10 M         39                    84.0      476.          0.119          0.203
     ## # … with 559 more rows, and 1 more variable: category_symmetry <fct>
 
-The data is will now be tidied back to original format.
+The data will now be tidied back to original format.
 
 ``` r
 tibble(cancer_sample) %>% 
