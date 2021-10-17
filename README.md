@@ -7,8 +7,8 @@ I made this repo to complete milestones for the mini-data analysis for STAT 545A
 
 ##### What files are here?
 
-1. ```mda-mchester_m1_files``` contains files of outputted plots for visualization and exploration from Milestone 1.
-2. ```mda-mchester_m2_files``` contains files of outputted plots for visualization and exploration from Milestone 2.
+1. ```mda-mchester_m1_files``` contains files of outputted plots from Milestone 1.
+2. ```mda-mchester_m2_files``` contains files of outputted plots from Milestone 2.
 3. ```mda-mchester_m1.md``` knitted ```github document``` from Milestone 1. 
 4. ```mda-mchester_m1.Rmd``` original R Markdown file from Milestone 1. 
 5. ```mda-mchester_m2.md``` knitted ```github document``` from Milestone 2. 
