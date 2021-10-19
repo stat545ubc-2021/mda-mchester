@@ -89,8 +89,6 @@ Now, choose two of the following tasks.
 
 **Task Number**: 1
 
-
-
 <!----------------------------------------------------------------------------->
 ```{r symmetry plot reordered}
 cancer_sample %>% #create categorical variable
@@ -111,6 +109,8 @@ cancer_sample %>% #create categorical variable
                           labels = c("Benign", "Malignant"),
                           name = "Diagnosis")
 ```
+
+The ```symmetry_mean``` categories were reordered based on total observations. Specifically, the plot now showcases where the majority of malignant diagnoses lie more clearly. 
 
 <!-------------------------- Start your work below ---------------------------->
 
