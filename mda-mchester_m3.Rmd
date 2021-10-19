@@ -103,24 +103,42 @@ cancer_sample %>% #create categorical variable
   labs(x = "Symmetry Category", #add labels
        y = "Perimeter (Mean)", 
        caption = "Source: UCI, 1995") +
-    scale_x_discrete(breaks = c("very low", "low","medium", "high", "very high"), #change x tick
-                   labels = c("Very Low", "Low", "Medium", "High", "Very High")) + 
+    scale_x_discrete(breaks = c("low","medium", "high"), #change x tick
+                   labels = c("Low", "Medium", "High")) + 
     scale_colour_discrete(limits = c("B", "M"),
                           labels = c("Benign", "Malignant"),
                           name = "Diagnosis")
 ```
 
-The ```symmetry_mean``` categories were reordered based on total observations. Specifically, the plot now showcases where the majority of malignant diagnoses lie more clearly. 
+The ```symmetry_mean``` categories were reordered based on total observations. Specifically, the plot now showcases where the majority of malignant diagnoses are in ascending order.
 
 <!-------------------------- Start your work below ---------------------------->
 
 **Task Number**: 2
 
+```{r symmetry plot reordered}
+cancer_sample %>% #create categorical variable
+  mutate(category_symmetry = cut(symmetry_mean, 
+                        breaks = 3,
+                      labels = c("low","medium","high"))) %>%
+  mutate(category_symmetry = fct_relevel(category_symmetry, "high","low", "medium")) %>%
+  mutate(category_symmetry = fct_collapse(category_symmetry, other = c("high", "low"))) %>%
+  ggplot(aes(x = category_symmetry,
+           y = perimeter_mean)) +
+  geom_point(aes(colour = factor(diagnosis)),
+             alpha = 0.2) +
+  labs(x = "Symmetry Category", #add labels
+       y = "Perimeter (Mean)", 
+       caption = "Source: UCI, 1995") +
+    scale_x_discrete(breaks = c("low","medium", "high", "other"), #change x tick
+                   labels = c("Low", "Medium", "High", "Other")) + 
+    scale_colour_discrete(limits = c("B", "M"),
+                          labels = c("Benign", "Malignant"),
+                          name = "Diagnosis")
+```
 
 
 <!----------------------------------------------------------------------------->
-
-    
 
 # Exercise 2: Modelling
 
@@ -130,9 +148,9 @@ Pick a research question, and pick a variable of interest (we'll call it "Y") th
 
 <!-------------------------- Start your work below ---------------------------->
 
-**Research Question**: FILL_THIS_IN
+**Research Question**: Are ```area_mean``` and ```symmetry_mean``` both significant predictors of a malignant diagnosis?
 
-**Variable of interest**: FILL_THIS_IN
+**Variable of interest**: ```symmetry_mean```
 
 <!----------------------------------------------------------------------------->
 
