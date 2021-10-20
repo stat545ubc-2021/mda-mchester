@@ -164,7 +164,23 @@ Fit a model or run a hypothesis test that provides insight on this variable with
     - You could use `lm()` to test for significance of regression.
 
 <!-------------------------- Start your work below ---------------------------->
+```{r correlation area_mean and diagnosis}
+cancer_sample %>%
+  ggplot(aes(area_mean, diagnosis)) +
+  geom_boxplot() #visualize relationsip
+summary(lm(area_mean ~ (diagnosis == "M"), data = cancer_sample)) #test area mean
+t.test(area_mean ~ (diagnosis == "M"), data = cancer_sample)
+```
 
+```{r correlation symmetry_mean and diagnosis}
+cancer_sample %>%
+  ggplot(aes(symmetry_mean, diagnosis)) +
+  geom_boxplot() #visualize relationsip
+summary(lm(symmetry_mean ~ diagnosis, data = cancer_sample)) #test symmetry mean
+t.test(symmetry_mean ~ diagnosis, data = cancer_sample)
+```
+
+Therefore, from significant t and p-values, the difference in means is significant in ```area_mean``` and ```symmetry_mean``` variables.
 
 <!----------------------------------------------------------------------------->
 
@@ -178,6 +194,12 @@ Produce something relevant from your fitted model: either predictions on Y, or a
   
 <!-------------------------- Start your work below ---------------------------->
 
+I have decided to use ```broom::tidy``` to eloquently display t-values for the differences of means. These values can be found in the "statistic" column. The corresponding p-values are displayed in the "p.value" column.
+
+```{r broom}
+broom::tidy(lm(area_mean ~ diagnosis, data = cancer_sample))
+broom::tidy(lm(symmetry_mean ~ diagnosis, data = cancer_sample))
+```
 
 <!----------------------------------------------------------------------------->
 
