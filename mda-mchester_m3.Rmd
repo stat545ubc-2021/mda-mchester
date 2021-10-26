@@ -244,6 +244,7 @@ Write your model object from Exercise 2 to an R binary file (an RDS), and load i
 fit <- lm(area_mean ~ diagnosis, data = cancer_sample)
 saveRDS(fit, here::here("output", "model.rds"))
 ```
+
 <!----------------------------------------------------------------------------->
 
 # Tidy Repository
