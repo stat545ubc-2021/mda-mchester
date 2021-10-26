@@ -166,16 +166,16 @@ Fit a model or run a hypothesis test that provides insight on this variable with
 <!-------------------------- Start your work below ---------------------------->
 ```{r correlation area_mean and diagnosis, fig.align = "center"}
 cancer_sample %>%
-  ggplot(aes(area_mean, diagnosis)) +
-  geom_boxplot() #visualize relationsip
+  ggplot(aes(diagnosis, area_mean)) +
+  geom_boxplot() #quickly visualize relationship
 summary(lm(area_mean ~ (diagnosis == "M"), data = cancer_sample)) #test area mean
 t.test(area_mean ~ (diagnosis == "M"), data = cancer_sample)
 ```
 
 ```{r correlation symmetry_mean and diagnosis, fig.align = "center"}
 cancer_sample %>%
-  ggplot(aes(symmetry_mean, diagnosis)) +
-  geom_boxplot() #visualize relationsip
+  ggplot(aes(diagnosis, symmetry_mean)) +
+  geom_boxplot() #quickly visualize relationship
 summary(lm(symmetry_mean ~ diagnosis, data = cancer_sample)) #test symmetry mean
 t.test(symmetry_mean ~ diagnosis, data = cancer_sample)
 ```
