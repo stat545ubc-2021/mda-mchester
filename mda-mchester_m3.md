@@ -99,7 +99,7 @@ cancer_sample %>% #create categorical variable
                           name = "Diagnosis")
 ```
 
-![](mda-mchester_m3_files/figure-gfm/symmetry%20plot-1.png)<!-- -->
+<img src="mda-mchester_m3_files/figure-gfm/symmetry plot-1.png" style="display: block; margin: auto;" />
 
 Now, choose two of the following tasks.
 
@@ -163,7 +163,7 @@ cancer_sample %>% #create categorical variable
                           name = "Diagnosis")
 ```
 
-![](mda-mchester_m3_files/figure-gfm/symmetry%20reordered-1.png)<!-- -->
+<img src="mda-mchester_m3_files/figure-gfm/symmetry reordered-1.png" style="display: block; margin: auto;" />
 
 The `symmetry_mean` categories were reordered based on total
 observations. Specifically, the plot now showcases where the majority of
@@ -194,7 +194,7 @@ cancer_sample %>% #create categorical variable
                           name = "Diagnosis")
 ```
 
-![](mda-mchester_m3_files/figure-gfm/symmetry%20other-1.png)<!-- -->
+<img src="mda-mchester_m3_files/figure-gfm/symmetry other-1.png" style="display: block; margin: auto;" />
 
 <!----------------------------------------------------------------------------->
 
@@ -242,7 +242,7 @@ cancer_sample %>%
   geom_boxplot() #visualize relationsip
 ```
 
-![](mda-mchester_m3_files/figure-gfm/correlation%20area_mean%20and%20diagnosis-1.png)<!-- -->
+<img src="mda-mchester_m3_files/figure-gfm/correlation area_mean and diagnosis-1.png" style="display: block; margin: auto;" />
 
 ``` r
 summary(lm(area_mean ~ (diagnosis == "M"), data = cancer_sample)) #test area mean
@@ -289,7 +289,7 @@ cancer_sample %>%
   geom_boxplot() #visualize relationsip
 ```
 
-![](mda-mchester_m3_files/figure-gfm/correlation%20symmetry_mean%20and%20diagnosis-1.png)<!-- -->
+<img src="mda-mchester_m3_files/figure-gfm/correlation symmetry_mean and diagnosis-1.png" style="display: block; margin: auto;" />
 
 ``` r
 summary(lm(symmetry_mean ~ diagnosis, data = cancer_sample)) #test symmetry mean
@@ -440,6 +440,18 @@ folder. Use the functions `saveRDS()` and `readRDS()`.
 fit <- lm(area_mean ~ diagnosis, data = cancer_sample)
 saveRDS(fit, here::here("output", "model.rds"))
 ```
+
+``` r
+readRDS(here::here("output", "model.rds"))
+```
+
+    ## 
+    ## Call:
+    ## lm(formula = area_mean ~ diagnosis, data = cancer_sample)
+    ## 
+    ## Coefficients:
+    ## (Intercept)   diagnosisM  
+    ##       462.8        515.6
 
 <!----------------------------------------------------------------------------->
 

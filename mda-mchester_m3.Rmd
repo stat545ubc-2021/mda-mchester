@@ -51,7 +51,7 @@ For this exercise, you'll be choosing two of the three tasks below -- both tasks
 But first, tasks 1 and 2 below ask you to modify a plot you made in a previous milestone. The plot you choose should involve plotting across at least three groups (whether by facetting, or using an aesthetic like colour). Place this plot below (you're allowed to modify the plot if you'd like). If you don't have such a plot, you'll need to make one. Place the code for your plot below.
 
 <!-------------------------- Start your work below ---------------------------->
-```{r symmetry plot}
+```{r symmetry plot, fig.align = "center"}
 cancer_sample %>% #create categorical variable
   mutate(category_symmetry = cut(symmetry_mean, 
                         breaks = 3,
@@ -90,7 +90,7 @@ Now, choose two of the following tasks.
 **Task Number**: 1
 
 <!----------------------------------------------------------------------------->
-```{r symmetry reordered}
+```{r symmetry reordered, fig.align = "center"}
 cancer_sample %>% #create categorical variable
   mutate(category_symmetry = cut(symmetry_mean, 
                         breaks = 3,
@@ -116,7 +116,7 @@ The ```symmetry_mean``` categories were reordered based on total observations. S
 
 **Task Number**: 2
 
-```{r symmetry other}
+```{r symmetry other, fig.align = "center"}
 cancer_sample %>% #create categorical variable
   mutate(category_symmetry = cut(symmetry_mean, 
                         breaks = 3,
@@ -164,7 +164,7 @@ Fit a model or run a hypothesis test that provides insight on this variable with
     - You could use `lm()` to test for significance of regression.
 
 <!-------------------------- Start your work below ---------------------------->
-```{r correlation area_mean and diagnosis}
+```{r correlation area_mean and diagnosis, fig.align = "center"}
 cancer_sample %>%
   ggplot(aes(area_mean, diagnosis)) +
   geom_boxplot() #visualize relationsip
@@ -172,7 +172,7 @@ summary(lm(area_mean ~ (diagnosis == "M"), data = cancer_sample)) #test area mea
 t.test(area_mean ~ (diagnosis == "M"), data = cancer_sample)
 ```
 
-```{r correlation symmetry_mean and diagnosis}
+```{r correlation symmetry_mean and diagnosis, fig.align = "center"}
 cancer_sample %>%
   ggplot(aes(symmetry_mean, diagnosis)) +
   geom_boxplot() #visualize relationsip
@@ -240,7 +240,7 @@ Write your model object from Exercise 2 to an R binary file (an RDS), and load i
 - The same robustness and reproducibility criteria as in 3.1 apply here.
 
 <!-------------------------- Start your work below ---------------------------->
-```{r rds}
+```{r save rds}
 fit <- lm(area_mean ~ diagnosis, data = cancer_sample)
 saveRDS(fit, here::here("output", "model.rds"))
 ```
