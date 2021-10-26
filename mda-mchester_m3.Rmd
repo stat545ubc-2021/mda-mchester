@@ -245,6 +245,10 @@ fit <- lm(area_mean ~ diagnosis, data = cancer_sample)
 saveRDS(fit, here::here("output", "model.rds"))
 ```
 
+```{r read rds}
+readRDS(here::here("output", "model.rds"))
+```
+
 <!----------------------------------------------------------------------------->
 
 # Tidy Repository
