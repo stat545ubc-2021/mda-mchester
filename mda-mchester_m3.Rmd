@@ -90,7 +90,7 @@ Now, choose two of the following tasks.
 **Task Number**: 1
 
 <!----------------------------------------------------------------------------->
-```{r symmetry plot reordered}
+```{r symmetry reordered}
 cancer_sample %>% #create categorical variable
   mutate(category_symmetry = cut(symmetry_mean, 
                         breaks = 3,
@@ -116,7 +116,7 @@ The ```symmetry_mean``` categories were reordered based on total observations. S
 
 **Task Number**: 2
 
-```{r symmetry plot reordered}
+```{r symmetry other}
 cancer_sample %>% #create categorical variable
   mutate(category_symmetry = cut(symmetry_mean, 
                         breaks = 3,
@@ -215,7 +215,21 @@ Take a summary table that you made from Milestone 2 (Exercise 1.2), and write it
 - **Reproducibility criteria**: You should be able to delete the csv file, and remake it simply by knitting this Rmd file. 
   
 <!-------------------------- Start your work below ---------------------------->
+```{r area_mean mean}
+area_table <- tibble(cancer_sample) %>% #make new tibble to find mean by category
+  select(diagnosis, area_mean) %>% #select area mean
+  group_by(diagnosis) %>% #group by diagnoses
+  summarise(across(where(is.numeric), mean)) #find mean
+```
 
+```{r here::here}
+here::here()
+dir.create(here::here("output"))
+```
+
+```{r write}
+write_csv(area_table, here::here("output", "area_table.csv"))
+```
 
 <!----------------------------------------------------------------------------->
 
@@ -226,8 +240,10 @@ Write your model object from Exercise 2 to an R binary file (an RDS), and load i
 - The same robustness and reproducibility criteria as in 3.1 apply here.
 
 <!-------------------------- Start your work below ---------------------------->
-
-
+```{r rds}
+fit <- lm(area_mean ~ diagnosis, data = cancer_sample)
+saveRDS(fit, here::here("output", "model.rds"))
+```
 <!----------------------------------------------------------------------------->
 
 # Tidy Repository
