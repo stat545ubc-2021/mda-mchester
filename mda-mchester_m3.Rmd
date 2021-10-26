@@ -203,8 +203,6 @@ broom::tidy(lm(symmetry_mean ~ diagnosis, data = cancer_sample))
 
 <!----------------------------------------------------------------------------->
 
-
-
 # Exercise 3: Reading and writing data
 
 Get set up for this exercise by making a folder called `output` in the top level of your project folder / repository. You'll be saving things there. 
