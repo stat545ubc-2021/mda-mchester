@@ -10,7 +10,8 @@ I made this repo to complete milestones for the mini-data analysis for STAT 545A
 1. ```milestone_1``` contains files, a README.md, as well as an .Rmd and .md file from Milestone 1.
 2. ```milestone_2``` contains files, a README.md, as well as an .Rmd and .md file from Milestone 2.
 3. ```milestone_3``` contains files, a README.md, as well as an .Rmd and .md file from Milestone 3.
-7. ```README.md``` quickly describes the project. 
+4. ```output``` contains .csv and .rds files.
+5. ```README.md``` quickly describes the project. 
 
 ##### How can you run code?
 
