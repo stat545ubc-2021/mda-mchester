@@ -34,13 +34,14 @@ Begin by loading your data and the tidyverse package below:
 ```{r, message = FALSE}
 library(datateachr) # <- might contain the data you picked!
 library(tidyverse)
+library(broom)
 ```
 
 From Milestone 2, you chose two research questions. What were they? Put them here.
 
 <!-------------------------- Start your work below ---------------------------->
 1. Are ```area_mean``` and ```symmetry_mean``` both significant predictors of a malignant diagnosis?
-2. Is the difference of means between the categories of ```symmetry_mean``` (low, medium, high) statistically significant?
+2. In benign tumours, are the differences of means between categories of ```symmetry_mean``` (low, medium, high) and ```perimeter_mean``` statistically significant?
 <!----------------------------------------------------------------------------->
 
 
@@ -53,11 +54,14 @@ But first, tasks 1 and 2 below ask you to modify a plot you made in a previous m
 <!-------------------------- Start your work below ---------------------------->
 ```{r symmetry plot, fig.align = "center"}
 cancer_sample %>% #create categorical variable
+  filter(diagnosis == "B") %>%
   mutate(category_symmetry = cut(symmetry_mean, 
                         breaks = 3,
                       labels = c("low","medium","high"))) %>%
   ggplot(aes(x = category_symmetry,
            y = perimeter_mean)) +
+  geom_boxplot(aes(),
+               alpha = 0.4) +
   geom_point(aes(colour = factor(diagnosis)),
              alpha = 0.2) +
   labs(x = "Symmetry Category", #add labels
@@ -65,8 +69,8 @@ cancer_sample %>% #create categorical variable
        caption = "Source: UCI, 1995") +
     scale_x_discrete(breaks = c("very low", "low","medium", "high", "very high"), #change x tick
                    labels = c("Very Low", "Low", "Medium", "High", "Very High")) + 
-    scale_colour_discrete(limits = c("B", "M"),
-                          labels = c("Benign", "Malignant"),
+    scale_colour_discrete(limits = c("B"),
+                          labels = c("Benign"),
                           name = "Diagnosis")
 ```
 
@@ -83,8 +87,6 @@ Now, choose two of the following tasks.
     2. Then, in a sentence or two, explain how your new column might be useful in exploring a research question. (1 point for demonstrating understanding of the function you used, and 1 point for your justification, which could be subtle or speculative).
         - For example, you could say something like "Investigating the day of the week might be insightful because penguins don't work on weekends, and so may respond differently".
     
-
-
 <!-------------------------- Start your work below ---------------------------->
 
 **Task Number**: 1
@@ -92,12 +94,14 @@ Now, choose two of the following tasks.
 <!----------------------------------------------------------------------------->
 ```{r symmetry reordered, fig.align = "center"}
 cancer_sample %>% #create categorical variable
+  filter(diagnosis == "B") %>%
   mutate(category_symmetry = cut(symmetry_mean, 
                         breaks = 3,
                       labels = c("low","medium","high"))) %>%
-  mutate(category_symmetry = fct_relevel(category_symmetry, "high","low", "medium")) %>%
+  mutate(category_symmetry = fct_relevel(category_symmetry, "high","medium", "low")) %>%
   ggplot(aes(x = category_symmetry,
            y = perimeter_mean)) +
+  geom_boxplot(aes()) +
   geom_point(aes(colour = factor(diagnosis)),
              alpha = 0.2) +
   labs(x = "Symmetry Category", #add labels
@@ -105,12 +109,12 @@ cancer_sample %>% #create categorical variable
        caption = "Source: UCI, 1995") +
     scale_x_discrete(breaks = c("low","medium", "high"), #change x tick
                    labels = c("Low", "Medium", "High")) + 
-    scale_colour_discrete(limits = c("B", "M"),
-                          labels = c("Benign", "Malignant"),
+    scale_colour_discrete(limits = c("B"),
+                          labels = c("Benign"),
                           name = "Diagnosis")
 ```
 
-The ```symmetry_mean``` categories were reordered based on total observations. Specifically, the plot now showcases where the majority of malignant diagnoses are in ascending order.
+The ```symmetry_mean``` categories were reordered to improve visualiztion and are now based on highest ```perimeter_mean```. Interestingly, the boxplot now displays that "low" symmetry values produce the highest ```perimeter_mean``` values in benign tumours, on average. With greater sample size, an interesting follow up question here would be whether highly symmetrical tumours with lower perimeter means are more likely to be malignant.
 
 <!-------------------------- Start your work below ---------------------------->
 
@@ -118,13 +122,15 @@ The ```symmetry_mean``` categories were reordered based on total observations. S
 
 ```{r symmetry other, fig.align = "center"}
 cancer_sample %>% #create categorical variable
+  filter(diagnosis == "B") %>%
   mutate(category_symmetry = cut(symmetry_mean, 
                         breaks = 3,
                       labels = c("low","medium","high"))) %>%
   mutate(category_symmetry = fct_relevel(category_symmetry, "high","low", "medium")) %>%
-  mutate(category_symmetry = fct_collapse(category_symmetry, other = c("high", "low"))) %>%
+  mutate(category_symmetry = fct_collapse(category_symmetry, other = c("high", "medium"))) %>%
   ggplot(aes(x = category_symmetry,
            y = perimeter_mean)) +
+  geom_boxplot(aes()) +
   geom_point(aes(colour = factor(diagnosis)),
              alpha = 0.2) +
   labs(x = "Symmetry Category", #add labels
@@ -132,11 +138,11 @@ cancer_sample %>% #create categorical variable
        caption = "Source: UCI, 1995") +
     scale_x_discrete(breaks = c("low","medium", "high", "other"), #change x tick
                    labels = c("Low", "Medium", "High", "Other")) + 
-    scale_colour_discrete(limits = c("B", "M"),
-                          labels = c("Benign", "Malignant"),
+    scale_colour_discrete(limits = c("B"),
+                          labels = c("Benign"),
                           name = "Diagnosis")
 ```
-
+The "high" and "medium" ```symmetry_mean``` categories have now been grouped together to compare to the "low" category. With these combined, the difference between group means appears insignificant. Again, an interesting follow up question here would be whether or not this pattern holds true for malignant diagnoses.
 
 <!----------------------------------------------------------------------------->
 
@@ -148,9 +154,9 @@ Pick a research question, and pick a variable of interest (we'll call it "Y") th
 
 <!-------------------------- Start your work below ---------------------------->
 
-**Research Question**: Are ```area_mean``` and ```symmetry_mean``` both significant predictors of a malignant diagnosis?
+**Research Question**: Is ```area_mean``` a significant predictor of a malignant diagnosis?
 
-**Variable of interest**: ```symmetry_mean```
+**Variable of interest**: ```area_mean```
 
 <!----------------------------------------------------------------------------->
 
@@ -168,19 +174,11 @@ Fit a model or run a hypothesis test that provides insight on this variable with
 cancer_sample %>%
   ggplot(aes(diagnosis, area_mean)) +
   geom_boxplot() #quickly visualize relationship
-summary(lm(area_mean ~ (diagnosis == "M"), data = cancer_sample)) #test area mean
-t.test(area_mean ~ (diagnosis == "M"), data = cancer_sample)
+summary(lm(area_mean ~ diagnosis, data = cancer_sample)) #test area mean
+t.test(area_mean ~ diagnosis, data = cancer_sample)
 ```
 
-```{r correlation symmetry_mean and diagnosis, fig.align = "center"}
-cancer_sample %>%
-  ggplot(aes(diagnosis, symmetry_mean)) +
-  geom_boxplot() #quickly visualize relationship
-summary(lm(symmetry_mean ~ diagnosis, data = cancer_sample)) #test symmetry mean
-t.test(symmetry_mean ~ diagnosis, data = cancer_sample)
-```
-
-Therefore, from significant t and p-values, the difference in means is significant in ```area_mean``` and ```symmetry_mean``` variables.
+Therefore, with a t-value greater than 2 and a p-value less than 0.05, the difference in ```area_mean``` by diagnosis is significant
 
 <!----------------------------------------------------------------------------->
 
@@ -194,13 +192,16 @@ Produce something relevant from your fitted model: either predictions on Y, or a
   
 <!-------------------------- Start your work below ---------------------------->
 
-I have decided to use ```broom::tidy``` to eloquently display t-values for the differences of means. These values can be found in the "statistic" column. The corresponding p-values are displayed in the "p.value" column.
+I have decided to use the  ```broom``` package to eloquently display t-values for the differences of means. These values can be found in the "statistic" column. The corresponding p-values are displayed in the "p.value" column.
 
 ```{r broom}
 broom::tidy(lm(area_mean ~ diagnosis, data = cancer_sample))
-broom::tidy(lm(symmetry_mean ~ diagnosis, data = cancer_sample))
 ```
+I have also decided to use the ```broom ``` package to make predictions on ```area_mean``` based on diagnosis. An interesting future question could look at prediction models based on a greater number of variables.
 
+```{r augment}
+augment(lm(area_mean ~ diagnosis, data = cancer_sample))
+```
 <!----------------------------------------------------------------------------->
 
 # Exercise 3: Reading and writing data

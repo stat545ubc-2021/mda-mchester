@@ -53,6 +53,7 @@ Begin by loading your data and the tidyverse package below:
 ``` r
 library(datateachr) # <- might contain the data you picked!
 library(tidyverse)
+library(broom)
 ```
 
 From Milestone 2, you chose two research questions. What were they? Put
@@ -62,8 +63,9 @@ them here.
 
 1.  Are `area_mean` and `symmetry_mean` both significant predictors of a
     malignant diagnosis?
-2.  Is the difference of means between the categories of `symmetry_mean`
-    (low, medium, high) statistically significant?
+2.  In benign tumours, are the differences of means between categories
+    of `symmetry_mean` (low, medium, high) and `perimeter_mean`
+    statistically significant?
     <!----------------------------------------------------------------------------->
 
 # Exercise 1: Special Data Types (10)
@@ -82,11 +84,14 @@ Place the code for your plot below.
 
 ``` r
 cancer_sample %>% #create categorical variable
+  filter(diagnosis == "B") %>%
   mutate(category_symmetry = cut(symmetry_mean, 
                         breaks = 3,
                       labels = c("low","medium","high"))) %>%
   ggplot(aes(x = category_symmetry,
            y = perimeter_mean)) +
+  geom_boxplot(aes(),
+               alpha = 0.4) +
   geom_point(aes(colour = factor(diagnosis)),
              alpha = 0.2) +
   labs(x = "Symmetry Category", #add labels
@@ -94,8 +99,8 @@ cancer_sample %>% #create categorical variable
        caption = "Source: UCI, 1995") +
     scale_x_discrete(breaks = c("very low", "low","medium", "high", "very high"), #change x tick
                    labels = c("Very Low", "Low", "Medium", "High", "Very High")) + 
-    scale_colour_discrete(limits = c("B", "M"),
-                          labels = c("Benign", "Malignant"),
+    scale_colour_discrete(limits = c("B"),
+                          labels = c("Benign"),
                           name = "Diagnosis")
 ```
 
@@ -145,12 +150,14 @@ Now, choose two of the following tasks.
 
 ``` r
 cancer_sample %>% #create categorical variable
+  filter(diagnosis == "B") %>%
   mutate(category_symmetry = cut(symmetry_mean, 
                         breaks = 3,
                       labels = c("low","medium","high"))) %>%
-  mutate(category_symmetry = fct_relevel(category_symmetry, "high","low", "medium")) %>%
+  mutate(category_symmetry = fct_relevel(category_symmetry, "high","medium", "low")) %>%
   ggplot(aes(x = category_symmetry,
            y = perimeter_mean)) +
+  geom_boxplot(aes()) +
   geom_point(aes(colour = factor(diagnosis)),
              alpha = 0.2) +
   labs(x = "Symmetry Category", #add labels
@@ -158,16 +165,20 @@ cancer_sample %>% #create categorical variable
        caption = "Source: UCI, 1995") +
     scale_x_discrete(breaks = c("low","medium", "high"), #change x tick
                    labels = c("Low", "Medium", "High")) + 
-    scale_colour_discrete(limits = c("B", "M"),
-                          labels = c("Benign", "Malignant"),
+    scale_colour_discrete(limits = c("B"),
+                          labels = c("Benign"),
                           name = "Diagnosis")
 ```
 
 <img src="mda-mchester_m3_files/figure-gfm/symmetry reordered-1.png" style="display: block; margin: auto;" />
 
-The `symmetry_mean` categories were reordered based on total
-observations. Specifically, the plot now showcases where the majority of
-malignant diagnoses are in ascending order.
+The `symmetry_mean` categories were reordered to improve visualiztion
+and are now based on highest `perimeter_mean`. Interestingly, the
+boxplot now displays that “low” symmetry values produce the highest
+`perimeter_mean` values in benign tumours, on average. With greater
+sample size, an interesting follow up question here would be whether
+highly symmetrical tumours with lower perimeter means are more likely to
+be malignant.
 
 <!-------------------------- Start your work below ---------------------------->
 
@@ -175,13 +186,15 @@ malignant diagnoses are in ascending order.
 
 ``` r
 cancer_sample %>% #create categorical variable
+  filter(diagnosis == "B") %>%
   mutate(category_symmetry = cut(symmetry_mean, 
                         breaks = 3,
                       labels = c("low","medium","high"))) %>%
   mutate(category_symmetry = fct_relevel(category_symmetry, "high","low", "medium")) %>%
-  mutate(category_symmetry = fct_collapse(category_symmetry, other = c("high", "low"))) %>%
+  mutate(category_symmetry = fct_collapse(category_symmetry, other = c("high", "medium"))) %>%
   ggplot(aes(x = category_symmetry,
            y = perimeter_mean)) +
+  geom_boxplot(aes()) +
   geom_point(aes(colour = factor(diagnosis)),
              alpha = 0.2) +
   labs(x = "Symmetry Category", #add labels
@@ -189,12 +202,17 @@ cancer_sample %>% #create categorical variable
        caption = "Source: UCI, 1995") +
     scale_x_discrete(breaks = c("low","medium", "high", "other"), #change x tick
                    labels = c("Low", "Medium", "High", "Other")) + 
-    scale_colour_discrete(limits = c("B", "M"),
-                          labels = c("Benign", "Malignant"),
+    scale_colour_discrete(limits = c("B"),
+                          labels = c("Benign"),
                           name = "Diagnosis")
 ```
 
 <img src="mda-mchester_m3_files/figure-gfm/symmetry other-1.png" style="display: block; margin: auto;" />
+The “high” and “medium” `symmetry_mean` categories have now been grouped
+together to compare to the “low” category. With these combined, the
+difference between group means appears insignificant. Again, an
+interesting follow up question here would be whether or not this pattern
+holds true for malignant diagnoses.
 
 <!----------------------------------------------------------------------------->
 
@@ -207,10 +225,10 @@ Pick a research question, and pick a variable of interest (we’ll call it
 
 <!-------------------------- Start your work below ---------------------------->
 
-**Research Question**: Are `area_mean` and `symmetry_mean` both
-significant predictors of a malignant diagnosis?
+**Research Question**: Is `area_mean` a significant predictor of a
+malignant diagnosis?
 
-**Variable of interest**: `symmetry_mean`
+**Variable of interest**: `area_mean`
 
 <!----------------------------------------------------------------------------->
 
@@ -238,28 +256,28 @@ specifics in STAT 545.
 
 ``` r
 cancer_sample %>%
-  ggplot(aes(area_mean, diagnosis)) +
-  geom_boxplot() #visualize relationsip
+  ggplot(aes(diagnosis, area_mean)) +
+  geom_boxplot() #quickly visualize relationship
 ```
 
 <img src="mda-mchester_m3_files/figure-gfm/correlation area_mean and diagnosis-1.png" style="display: block; margin: auto;" />
 
 ``` r
-summary(lm(area_mean ~ (diagnosis == "M"), data = cancer_sample)) #test area mean
+summary(lm(area_mean ~ diagnosis, data = cancer_sample)) #test area mean
 ```
 
     ## 
     ## Call:
-    ## lm(formula = area_mean ~ (diagnosis == "M"), data = cancer_sample)
+    ## lm(formula = area_mean ~ diagnosis, data = cancer_sample)
     ## 
     ## Residuals:
     ##     Min      1Q  Median      3Q     Max 
     ## -616.78 -141.99  -12.89  113.62 1522.62 
     ## 
     ## Coefficients:
-    ##                      Estimate Std. Error t value Pr(>|t|)    
-    ## (Intercept)            462.79      13.15   35.20   <2e-16 ***
-    ## diagnosis == "M"TRUE   515.59      21.54   23.94   <2e-16 ***
+    ##             Estimate Std. Error t value Pr(>|t|)    
+    ## (Intercept)   462.79      13.15   35.20   <2e-16 ***
+    ## diagnosisM    515.59      21.54   23.94   <2e-16 ***
     ## ---
     ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
     ## 
@@ -268,70 +286,23 @@ summary(lm(area_mean ~ (diagnosis == "M"), data = cancer_sample)) #test area mea
     ## F-statistic: 573.1 on 1 and 567 DF,  p-value: < 2.2e-16
 
 ``` r
-t.test(area_mean ~ (diagnosis == "M"), data = cancer_sample)
+t.test(area_mean ~ diagnosis, data = cancer_sample)
 ```
 
     ## 
     ##  Welch Two Sample t-test
     ## 
-    ## data:  area_mean by diagnosis == "M"
+    ## data:  area_mean by diagnosis
     ## t = -19.641, df = 244.79, p-value < 2.2e-16
     ## alternative hypothesis: true difference in means is not equal to 0
     ## 95 percent confidence interval:
     ##  -567.2919 -463.8805
     ## sample estimates:
-    ## mean in group FALSE  mean in group TRUE 
-    ##            462.7902            978.3764
-
-``` r
-cancer_sample %>%
-  ggplot(aes(symmetry_mean, diagnosis)) +
-  geom_boxplot() #visualize relationsip
-```
-
-<img src="mda-mchester_m3_files/figure-gfm/correlation symmetry_mean and diagnosis-1.png" style="display: block; margin: auto;" />
-
-``` r
-summary(lm(symmetry_mean ~ diagnosis, data = cancer_sample)) #test symmetry mean
-```
-
-    ## 
-    ## Call:
-    ## lm(formula = symmetry_mean ~ diagnosis, data = cancer_sample)
-    ## 
-    ## Residuals:
-    ##       Min        1Q    Median        3Q       Max 
-    ## -0.068186 -0.016809 -0.002786  0.016114  0.111091 
-    ## 
-    ## Coefficients:
-    ##             Estimate Std. Error t value Pr(>|t|)    
-    ## (Intercept) 0.174186   0.001371 127.088  < 2e-16 ***
-    ## diagnosisM  0.018723   0.002245   8.338 5.73e-16 ***
-    ## ---
-    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-    ## 
-    ## Residual standard error: 0.0259 on 567 degrees of freedom
-    ## Multiple R-squared:  0.1092, Adjusted R-squared:  0.1077 
-    ## F-statistic: 69.53 on 1 and 567 DF,  p-value: 5.733e-16
-
-``` r
-t.test(symmetry_mean ~ diagnosis, data = cancer_sample)
-```
-
-    ## 
-    ##  Welch Two Sample t-test
-    ## 
-    ## data:  symmetry_mean by diagnosis
-    ## t = -8.1122, df = 406.09, p-value = 5.958e-15
-    ## alternative hypothesis: true difference in means is not equal to 0
-    ## 95 percent confidence interval:
-    ##  -0.02326009 -0.01418584
-    ## sample estimates:
     ## mean in group B mean in group M 
-    ##        0.174186        0.192909
+    ##        462.7902        978.3764
 
-Therefore, from significant t and p-values, the difference in means is
-significant in `area_mean` and `symmetry_mean` variables.
+Therefore, with a t-value greater than 2 and a p-value less than 0.05,
+the difference in `area_mean` by diagnosis is significant
 
 <!----------------------------------------------------------------------------->
 
@@ -351,10 +322,10 @@ Y, or a single value like a regression coefficient or a p-value.
 
 <!-------------------------- Start your work below ---------------------------->
 
-I have decided to use `broom::tidy` to eloquently display t-values for
-the differences of means. These values can be found in the “statistic”
-column. The corresponding p-values are displayed in the “p.value”
-column.
+I have decided to use the `broom` package to eloquently display t-values
+for the differences of means. These values can be found in the
+“statistic” column. The corresponding p-values are displayed in the
+“p.value” column.
 
 ``` r
 broom::tidy(lm(area_mean ~ diagnosis, data = cancer_sample))
@@ -366,15 +337,28 @@ broom::tidy(lm(area_mean ~ diagnosis, data = cancer_sample))
     ## 1 (Intercept)     463.      13.1      35.2 8.99e-145
     ## 2 diagnosisM      516.      21.5      23.9 4.73e- 88
 
+I have also decided to use the `broom` package to make predictions on
+`area_mean` based on diagnosis. An interesting future question could
+look at prediction models based on a greater number of variables.
+
 ``` r
-broom::tidy(lm(symmetry_mean ~ diagnosis, data = cancer_sample))
+augment(lm(area_mean ~ diagnosis, data = cancer_sample))
 ```
 
-    ## # A tibble: 2 × 5
-    ##   term        estimate std.error statistic  p.value
-    ##   <chr>          <dbl>     <dbl>     <dbl>    <dbl>
-    ## 1 (Intercept)   0.174    0.00137    127.   0       
-    ## 2 diagnosisM    0.0187   0.00225      8.34 5.73e-16
+    ## # A tibble: 569 × 8
+    ##    area_mean diagnosis .fitted .resid    .hat .sigma   .cooksd .std.resid
+    ##        <dbl> <chr>       <dbl>  <dbl>   <dbl>  <dbl>     <dbl>      <dbl>
+    ##  1     1001  M            978.   22.6 0.00472   249. 0.0000198     0.0913
+    ##  2     1326  M            978.  348.  0.00472   248. 0.00466       1.40  
+    ##  3     1203  M            978.  225.  0.00472   248. 0.00195       0.906 
+    ##  4      386. M            978. -592.  0.00472   247. 0.0135       -2.39  
+    ##  5     1297  M            978.  319.  0.00472   248. 0.00392       1.29  
+    ##  6      477. M            978. -501.  0.00472   248. 0.00970      -2.02  
+    ##  7     1040  M            978.   61.6 0.00472   249. 0.000147      0.249 
+    ##  8      578. M            978. -400.  0.00472   248. 0.00619      -1.62  
+    ##  9      520. M            978. -459.  0.00472   248. 0.00811      -1.85  
+    ## 10      476. M            978. -502.  0.00472   248. 0.00974      -2.03  
+    ## # … with 559 more rows
 
 <!----------------------------------------------------------------------------->
 
